@@ -79,7 +79,7 @@ function Register() {
     setFormErrors(validate(formData));
   
     }
-        else  {
+        {/*else  {
       const userData = {
         first_name,
         last_name,
@@ -91,7 +91,7 @@ function Register() {
       }
 
       dispatch(register(userData))
-    }
+    }*/
   }
   
 
