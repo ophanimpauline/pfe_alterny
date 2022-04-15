@@ -66,6 +66,7 @@ export const verify = createAsyncThunk ('auth/verify', async (user, thunkAPI) =>
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
+//export const goog
 
 export const authSlice = createSlice({
   name: 'auth',
