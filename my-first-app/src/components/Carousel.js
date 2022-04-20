@@ -1,12 +1,8 @@
 import React from 'react'
 import {Carousel as Carousel1} from 'react-bootstrap'
 import ImagesForSlider from './ImagesForSlider'
-import axios from 'axios';
 
-const CAROUSEL_API = 'CAROUSEL_API';
 
-//const Response = await axios.get(CAROUSEL_API);
-//console.log(Response);
 
 
 export default function Carousel() {

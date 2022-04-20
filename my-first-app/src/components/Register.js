@@ -1,6 +1,9 @@
 import { useRef, useState, useEffect } from "react";
-import "./Register.css";
+import "./Registration.css";
 import axios from '../api/axios';
+import styled from 'styled-components';
+import {FcGoogle} from 'react-icons/fc';
+import {ImFacebook2} from 'react-icons/im';
 //import { Link, Redirect } from 'react-router-dom';
 
 const REGISTER_URL = '/auth/users/';
@@ -77,10 +80,47 @@ function Register() {
     }
     return errors;
   };
- 
+  const Container = styled.div`
+  font-family: "lato";
+`;
+
+  const WrapperG = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const Title = styled.div`
+  font-size: 30px;
+  margin: 25px;
+`;
+const STitle = styled.div`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
+const CDP = styled.div`
+  width: 310px;
+  height: auto;
+`;
+const DP = styled.p`
+  font-size: 14px;
+  color: black;
+`;
+const HRA = styled.hr`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid gray;
+  width: 70%;
+`;
+const WrapperI = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+`;
 
   return (
     <>
+
     {isSubmit ? (
         <section>
           <h1> Félicitations !</h1>
@@ -89,14 +129,38 @@ function Register() {
           </p>
         </section>
       ) : (
+        <Container>
+        <WrapperG>
+        <Title>CRÉER VOTRE COMPTE</Title>
+        <STitle>S'inscrire avec Gmail ou Facebook:</STitle>
 
-    <div className="container">
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message success">Signed in successfully</div>
-      ) : (
-        <pre>{JSON.stringify(formValues, undefined, 2)}</pre>
-      )}
-
+        {/*<Button
+          variant="contained"
+          startIcon={<FcGoogle />}
+          disableElevation
+          sx={{
+            width: 300,
+            backgroundColor: "#000000",
+            fontFamily: "lato",
+          }}
+        >
+          CONTINUEZ AVEC GOOGLE
+        </Button>*/}
+        <button className="fluid ui button blue">
+          <FcGoogle/>
+          S'inscrire avec Gmail</button>
+          <br/>
+          <button className="fluid ui button blue">
+          <ImFacebook2 style={{color: "#4267B2"}}/>
+          S'inscrire avec Facebook</button>
+        <DP>
+          C'est facile, rapide et vous n'avez pas besoin de mémoriser un mot
+          de passe. Nous ne partagerons pas vos données et ne publierons
+          rien en votre nom.
+        </DP>
+      </WrapperG>
+      <hr style={{size: '5px'}}></hr>
+  
       <form onSubmit={handleSubmit}>
         <h1>S'inscrire avec votre e-mail: </h1>
         <div className="ui divider"></div>
@@ -161,10 +225,13 @@ function Register() {
           <button className="fluid ui button blue">S'INSCRIRE</button>
         </div>
       </form>
-    </div>
+      </Container>
+    
+    
       )} 
-      </>
+      
+       </>
   );
-      }
+};
 
 export default Register;

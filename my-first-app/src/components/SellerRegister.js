@@ -50,7 +50,7 @@ function SellerRegister() {
     e.preventDefault();
     //need to put these in the then thingy
     formValues.username=formValues.email;
-    formValues.type="1";
+    formValues.type="2";
     setFormErrors(validate(formValues));
     try{
       const response= await axios.post(REGISTER_URL,
@@ -107,6 +107,7 @@ function SellerRegister() {
       <Container>
         <IntoShape/>
         <AnimatedShapes/>
+        <div className="container">
       <form onSubmit={handleSubmit}>
         <h1>Créér un compte vendeur </h1>
         <div className="ui divider"></div>
@@ -171,7 +172,9 @@ function SellerRegister() {
           <button className="fluid ui button blue">CONTINUER</button>
         </div>
       </form>
+      </div>
       </Container>
+      
   </>
   );
       }

@@ -33,12 +33,31 @@ const login = async (userData) => {
 const logout = () => {
   localStorage.removeItem('user')
 }
+//view profile
+const viewProfile = async (userData) => {
+  const response = await axios.get(DB_URL + 'users/uid', userData)
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
+  return response.data
+}
 
+//update profile
+const updateProfile = async (userData) => {
+  const response = await axios.post(DB_URL + 'users/update/uid', userData)
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
+  return response.data
+}
 //any functions we're gonna create and we want to export we put in this authservice obj that will be exported fard mara f ekher el file
 const authService = {
   register,
   logout,
   login,
+  viewProfile,
+  updateProfile,
+
 }
 
 export default authService

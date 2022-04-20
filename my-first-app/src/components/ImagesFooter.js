@@ -1,6 +1,6 @@
-const Images = { 
-    img1: require('./Appstore.png').default,
-    img2: require('./Googleplay.png').default,
+const ImagesFooter = { 
+    img1: require('../DataForFooter/Appstore.png'),
+    img2: require('../DataForFooter/Googleplay.png'),
 }
 
 export default ImagesFooter;

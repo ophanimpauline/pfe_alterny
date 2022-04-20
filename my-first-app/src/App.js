@@ -1,12 +1,18 @@
 
 import './App.css';
-import Carousel from './components/Carousel';
+
+//import Login from './pages/Login';
+//import Carousel from './components/Carousel';
+//import StoreRegistration from './pages/StoreRegistration';
 //import Cart from './components/Cart'
-import SellerRegister from './components/SellerRegister'
+//import SellerRegistration from './pages/SellerRegistration'
+//import Register from './components/Register'
+import Profile
+ from './components/Profile';
 function App() {
   return (
     <div className="App">
-  <SellerRegister/>
+      <Profile/>
     </div>
   );
 }

@@ -48,7 +48,33 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     return thunkAPI.rejectWithValue(message)
   }
 })
+//view profile
+export const viewProfile = createAsyncThunk('users/uid', async (user, thunkAPI) => {
+  try {
+    return await authService.viewProfile(user)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 
+//update profile
+export const updateProfile = createAsyncThunk('users/update/uid', async (user, thunkAPI) => {
+  try {
+    return await authService.updateProfile(user)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
+    return thunkAPI.rejectWithValue(message)
+  }
+})
 export const verify = createAsyncThunk ('auth/verify', async (user, thunkAPI) => {
   try{
     return await authService.verify(user)

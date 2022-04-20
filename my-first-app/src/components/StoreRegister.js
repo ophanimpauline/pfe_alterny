@@ -1,10 +1,34 @@
 import { useRef, useState, useEffect } from "react";
-import "./Register.css";
+import "./StoreRegister.css";
+import styled, { css } from "styled-components";
 import axios from '../api/axios';
+import AnimatedShapes from "./AnimatedShapes";
 //import { Link, Redirect } from 'react-router-dom';
 
 const REGISTER_URL = '/auth/users/';
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
+const Container = styled.div`
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+`;
+
+const Shape = css`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+`;
+
+const IntoShape = styled.div`
+  ${Shape}
+  clip-path: polygon(67% 0, 100% 0%, 100% 100%, 55% 100%);
+  background-color: #FFB6C1;
+`;
 
 function StoreRegister() {
   //data objects empty stored in initialValues
@@ -53,10 +77,10 @@ function StoreRegister() {
   const validate = (values) => {
     const errors = {};
     if (!values.store_name) {
-      errors.store_name= "Ce champs est obligatoire";
+      errors.store_namee = "Ce champs est obligatoire";
     }  
     if (!values.description) {
-        errors.last_name = "Ce champs est obligatoire";
+        errors.description = "Ce champs est obligatoire";
       }
     if (!values.brand) {
       errors.brand = "Ce champs est obligatoire";
@@ -67,28 +91,16 @@ function StoreRegister() {
 
   return (
     <>
-    {isSubmit ? (
-        <section>
-          <h1> Félicitations !</h1>
-          <p>
-            <a href="#">Se connecter</a>
-          </p>
-        </section>
-      ) : (
-
-    <div className="container">
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message success">Signed in successfully</div>
-      ) : (
-        <pre>{JSON.stringify(formValues, undefined, 2)}</pre>
-      )}
-
+      <Container>
+        <IntoShape/>
+        <AnimatedShapes/>
+        <div className="container">
       <form onSubmit={handleSubmit}>
-        <h1>Informations de la boutique </h1>
+        <h1>Créér votre boutique! </h1>
         <div className="ui divider"></div>
         <div className="ui form">
           <div className="field">
-            <label>Nom de la boutique: * </label>
+            <label>Nom: * </label>
             <input
               type="text"
               name="store_name"
@@ -97,18 +109,18 @@ function StoreRegister() {
               onChange={handleChange}
             />
           </div>
-          <p>{formErrors.store_name}</p>
+          <p>{formErrors.first_name}</p>
           <div className="field">
-            <label>Description de la boutique: *</label>
+            <label>Description: *</label>
             <input
-              type="text"
+              type="description"
               name="description"
               placeholder=""
               value={formValues.description}
               onChange={handleChange}
             />
           </div>
-          <p>{formErrors.description}</p>
+          <p>{formErrors.last_name}</p>
 
           <div className="field">
             <label>Brand: *</label>
@@ -121,12 +133,13 @@ function StoreRegister() {
             />
           </div>
           <p>{formErrors.brand}</p>
-          <button className="fluid ui button blue">CRÉER VOTRE BOUTIQUE</button>
+          <button className="fluid ui button blue">CONTINUER</button>
         </div>
       </form>
-    </div>
-      )} 
-      </>
+      </div>
+      </Container>
+      
+  </>
   );
       }
 
