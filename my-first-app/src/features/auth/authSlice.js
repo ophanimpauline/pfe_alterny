@@ -12,6 +12,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
+  //profile: profile ? profile : null,
   /*access: localStorage.getItem('access'),
   refresh: localStorage.getItem('refresh'),
   isAuthenticated: null,*/
@@ -34,6 +35,8 @@ export const register = createAsyncThunk(
     }
   }
 )
+
+
 
 // Login user
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
@@ -61,11 +64,10 @@ export const viewProfile = createAsyncThunk('users/uid', async (user, thunkAPI) 
     return thunkAPI.rejectWithValue(message)
   }
 })
-
-//update profile
-export const updateProfile = createAsyncThunk('users/update/uid', async (user, thunkAPI) => {
+// post profile
+export const postProfile  = createAsyncThunk('URL TA3 SENDING EL EL PROFILE', async (profile, thunkAPI) => {
   try {
-    return await authService.updateProfile(user)
+    return await authService.postProfile(profile)
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -75,6 +77,21 @@ export const updateProfile = createAsyncThunk('users/update/uid', async (user, t
     return thunkAPI.rejectWithValue(message)
   }
 })
+
+//update profile
+export const updateProfile = createAsyncThunk('users/update/uid', async (profile, thunkAPI) => {
+  try {
+    return await authService.updateProfile(profile)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+// verification 
 export const verify = createAsyncThunk ('auth/verify', async (user, thunkAPI) => {
   try{
     return await authService.verify(user)

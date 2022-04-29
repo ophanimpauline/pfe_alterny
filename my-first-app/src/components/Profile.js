@@ -1,4 +1,5 @@
 import React from "react";
+import {FiEdit} from 'react-icons/fi';
 
 function Profile() {
   return (
@@ -6,6 +7,9 @@ function Profile() {
       <div className="flex-box-1">
         <h1>Vos informations: </h1>
         {/*a modification icon would be here, if you click on it it redirects you to the modification view */}
+        <span style={{cursor: 'pointer'}}>
+          Editer vos informations <FiEdit/>
+        </span>
         <div className="email">
           <span>Email:</span>
           <br/>

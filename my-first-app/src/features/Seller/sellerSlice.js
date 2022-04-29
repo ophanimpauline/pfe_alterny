@@ -12,6 +12,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
+  profile: profile ? profile : null,
   /*access: localStorage.getItem('access'),
   refresh: localStorage.getItem('refresh'),
   isAuthenticated: null,*/

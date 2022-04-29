@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { register, reset } from '../features/auth/authSlice'
-import Spinner from '../componentsforpfe/Spinner'
+//import Spinner from '../componentsforpfe/Spinner'
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -95,9 +95,9 @@ function Register() {
   }
   
 
-  if (isLoading) {
+ {/* if (isLoading) {
     return <Spinner />
-  }
+ */}
 
   return (
     <>
