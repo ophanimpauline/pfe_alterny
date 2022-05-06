@@ -9,7 +9,14 @@ const Acceuil = () => {
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
   };
-
+  console.log(Object.keys(null || {}));
+  const result = Object.keys(data).map(key => {
+    console.log(key);
+    console.log(data[key]);
+    return {[key] : data[key]};
+  });
+  console.log(result);
+  
   return (
     <div className="home-container">
       {isLoading ? (
@@ -20,7 +27,7 @@ const Acceuil = () => {
         <>
           <h2>tous les produits</h2>
           <div className="products">
-            {data?.map((product) => (
+            {data?.map((product) => {
               <div key={product.id} className="product">
                 <h3>{product.title}</h3>
                 <img src={product.image} alt={product.title} />
@@ -31,8 +38,8 @@ const Acceuil = () => {
                 <button onClick={() => handleAddToCart(product)}>
                   Ajouter au panier
                 </button>
-              </div>
-            ))}
+              </div>;
+            })}
           </div>
         </>
       )}

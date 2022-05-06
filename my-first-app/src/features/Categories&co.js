@@ -5,31 +5,30 @@ const initialState = {
   items: [],
   status: null,
 };
-export const productsFetch = createAsyncThunk(
+export const categoriesFetch = createAsyncThunk(
   "products/productsFetch",
   async () => {
-    const response = await axios.get(DB_URL + "/store/products/");
+    const response = await axios.get(DB_URL + "/store/collections/");
     return response?.data;
   }
 );
 
-const productsSlice = createSlice({
-  name: "products",
+const categoriesSlice = createSlice({
+  name: "categories",
   initialState,
   reducers: {},
   extraReducers: {
-    [productsFetch.pending]: (state, action) => {
+    [categoriesFetch.pending]: (state, action) => {
       state.status = "pending";
     },
-    [productsFetch.fulfilled]: (state, action) => {
+    [categoriesFetch.fulfilled]: (state, action) => {
       state.status = "success";
       state.items = action.payload;
     },
-    [productsFetch.rejected]: (state, action) => {
+    [categoriesFetch.rejected]: (state, action) => {
       state.status = "rejected";
 
     },
   },
 });
-
-export default productsSlice.reducer;
+export default categoriesSlice.reducer;
