@@ -2,6 +2,8 @@ import React from "react";
 import { useGetAllProductsQuery } from "../features/ProductApi";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/Cart/cartSlice";
+import { addToWishlist } from "../features/Wishlist/wishlistSlice";
+
 
 const Acceuil = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
@@ -9,14 +11,10 @@ const Acceuil = () => {
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
   };
-  console.log(Object.keys(null || {}));
-  const result = Object.keys(data).map(key => {
-    console.log(key);
-    console.log(data[key]);
-    return {[key] : data[key]};
-  });
-  console.log(result);
-  
+  const handleAddToWishlist = (product) => {
+    dispatch(addToWishlist(product));
+  };
+
   return (
     <div className="home-container">
       {isLoading ? (
@@ -27,18 +25,23 @@ const Acceuil = () => {
         <>
           <h2>tous les produits</h2>
           <div className="products">
-            {data?.map((product) => {
-              <div key={product.id} className="product">
-                <h3>{product.title}</h3>
-                <img src={product.image} alt={product.title} />
-                <div className="details">
-                  <span>{product.description}</span>
-                  <span className="price">{product.store_price}dt</span>
+            {data?.results.map((product) => {
+              return (
+                <div key={product.id} className="product">
+                  <h3>{product.title}</h3>
+                  <img src={product.image} alt={product.title} />
+                  <div className="details">
+                    <span>{product.description}</span>
+                    <span className="price">{product.store_price}dt</span>
+                  </div>
+                  <button onClick={() => handleAddToCart(product)}>
+                    Ajouter au panier
+                  </button>
+                  <button onClick={() => handleAddToWishlist(product)}>
+                    favoris
+                  </button>
                 </div>
-                <button onClick={() => handleAddToCart(product)}>
-                  Ajouter au panier
-                </button>
-              </div>;
+              );
             })}
           </div>
         </>

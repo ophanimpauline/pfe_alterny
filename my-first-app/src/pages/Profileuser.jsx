@@ -2,7 +2,7 @@ import React from 'react'
 import Profile from '../components/Profile';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import PictureUploader from '../components/PictureUploader';
+//import PictureUploader from '../components/PictureUploader';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -16,15 +16,14 @@ function Profileuser() {
   return (
    <>
    
-   <Header/>
+   
    <Container>
    <Profile/>
-   <PictureUploader/>
    </Container>
-   <Footer/>
+   
    
    </>
   )
 }
 
-export default Profileuser
+export default Profileuser;

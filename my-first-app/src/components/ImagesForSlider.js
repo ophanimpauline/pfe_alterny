@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SLIDER = "slide/";
+const SLIDER = "https://49df-197-2-252-43.ngrok.io/slide/";
 
 const getImages = async () => {
   try {

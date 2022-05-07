@@ -1,32 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {toast } from "react-toastify";
 
-export const wishlistSlice = createSlice({
+const initialState = {
+  wishlistItems: [],
+  wishlistTotalQuantity: 0,
+  wishlistTotalAmount: 0,
+};
+
+const wishlistSlice = createSlice({
   name: "wishlist",
-  initialState: [{
-    id: 1,
-    name: "A Promised Land", 
-    price: 15, url: "https://cutt.ly/dhQyXFY",
-    description: "Book by Barack Obama" }],
+  initialState,
   reducers: {
-    add: (state, action) => {
-      state = state.push({
-        id: action.payload.id,
-        name: action.payload.name,
-        price: action.payload.price,
-        url: action.payload.url,
-        description: action.payload.description,
-      });
-    },
-    deleteWish: (state, action) => {
-      state = state.filter((wish) => wish.id != action.payload.id);
-      return state;
+    addToWishlist(state, action) {
+      const itemIndex = state.wishlistItems.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if(itemIndex >= 0){
+          state.wishlistItems[itemIndex].wishlistQuantity += 1
+          toast.info("produit ajouté au wishlist", {
+            position: "bottom-left",
+          } );
+      }else{
+        
+      const tempProduct = { ...action.payload, wishlistQuantity: 1 };
+      state.Items.push(tempProduct);
+      toast.success("nouveau produit ajouté", {
+        position: "bottom-left",
+      } );
+      }
+      
     },
   },
 });
 
-export const { add, deleteWish } = wishlistSlice.actions;
-
-export const selectAll = (state) => state.wishlist;
-
+export const { addToWishlist } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

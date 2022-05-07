@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Infobar from "./Infobar";
 import { FiSearch, FiUser, FiShoppingCart, FiHeart } from "react-icons/fi";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 85px;
@@ -101,7 +101,9 @@ const Headerpfe = () => {
         </Wrapper>
         <Right>
           <User>
+            <Link to ="/Profile">
             <FiUser />
+            </Link>
           </User>
           {/*i added the links but review this again if it's correct or nah */}
           <Text>
@@ -109,11 +111,16 @@ const Headerpfe = () => {
             Créer un compte </span> <br /> <span> Connexion{" "}
             </span>
             </Text>
+            
           <Shoppingcart>
+          <Link to="/Cart">
             <FiShoppingCart />
+            </Link>
           </Shoppingcart>
           <Heart>
+          <Link to="/Wishlist">
             <FiHeart />
+             </Link>
           </Heart>
         </Right>
       </Container>

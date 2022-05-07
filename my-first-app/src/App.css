@@ -117,3 +117,36 @@ body{
   outline: none;
   cursor: pointer;
 }
+/*form*/
+.container > form {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background: clear;
+  font-family: 'lato';
+  line-height: 20px;
+  align-self: flex-start;
+}
+input[type=text], input[type=password]{
+  width: 60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  outline: none;
+  align-self: center;
+  align-items: flex-start;
+  
+}
+/*filter*/
+.filter{
+  display:flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 1rem;
+  border-bottom: .1rem #c0c0c0 solid;
+}
+.filter div{
+  flex: 1;
+}
