@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Infobar from "./Infobar";
+import { useSelector } from "react-redux";
 import { FiSearch, FiUser, FiShoppingCart, FiHeart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -86,6 +87,7 @@ const Text = styled.small`
 `;
 
 const Headerpfe = () => {
+  const {cartTotalQuantity} = useSelector(state => state.cart)
   return (
     <>
       <Infobar />
@@ -117,6 +119,9 @@ const Headerpfe = () => {
           <Shoppingcart>
           <Link to="/Cart">
             <FiShoppingCart />
+            <span className="bag-quantity">
+              <span>{cartTotalQuantity}</span>
+            </span>
             </Link>
           </Shoppingcart>
           <Heart>

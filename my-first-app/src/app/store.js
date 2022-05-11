@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from '../features/auth/authSlice'
-import cartReducer from '../features/Cart/cartSlice';
+import cartReducer, { getTotals } from '../features/Cart/cartSlice';
 import productsReducer, { productsFetch } from '../features/productsSlice'
 import { productsApi } from '../features/ProductApi';
 import categoriesReducer, { categoriesFetch } from '../features/CategoriesSlice';
@@ -26,5 +26,6 @@ export const store = configureStore({
 
 // this will dispatch our action creater and createasynch thunk
  store.dispatch(productsFetch());
+ store.dispatch(getTotals());
  store.dispatch(categoriesFetch());
  
