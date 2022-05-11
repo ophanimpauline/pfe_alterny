@@ -10,6 +10,7 @@ const Acceuil = () => {
   const dispatch = useDispatch();
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+    
   };
   const handleAddToWishlist = (product) => {
     dispatch(addToWishlist(product));

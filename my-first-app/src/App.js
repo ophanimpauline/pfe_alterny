@@ -7,7 +7,7 @@ import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Layout from "./Hocs/Layout";
-import Cart1 from "./components/Cart1";
+import Cart from "./components/Cart";
 import NotFound from "./pages/NotFound";
 import Wishlist from "./pages/Wishlist";
 import Profileuser from "./pages/Profileuser";
@@ -26,8 +26,8 @@ const App = () => (
       <Layout>
         <Routes>
         <Route path="/Filter" element={<Filtertest/>}></Route>
-          <Route path="/Cart" element={<Cart1 />}></Route>
-          <Route path="/Cart/:id" element={<Cart1 />}></Route>
+          <Route path="/Cart" element={<Cart />}></Route>
+          <Route path="/Cart/:id" element={<Cart />}></Route>
           <Route path="/Wishlist" element={<Wishlist />}></Route>
           <Route path="/Profile" element={<Profileuser />}></Route>
           <Route path="/not-found" element={<NotFound />}></Route>

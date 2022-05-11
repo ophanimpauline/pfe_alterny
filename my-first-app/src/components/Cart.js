@@ -1,72 +1,98 @@
-import React from "react"
-import "./style.css"
+import {useSelector, useDispatch } from "react-redux";
 
-const Cart = ({ CartItem, addToCart, decreaseQty }) => {
-  // Stpe: 7   calucate total of items
-  const totalPrice = CartItem.reduce((price, item) => price + item.qty * item.price, 0)
+import {Link} from "react-router-dom";
+import {  FiShoppingCart } from "react-icons/fi";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { removeFromCart } from "../features/Cart/cartSlice";
 
-  // prodcut qty total
+/*we want to check if the cart is empty we show another interface
+if not, we show the products, so we need to use the useSelector
+hook to access the state of the cart, it's a hook from 
+react redux */
+const Cart = () => {
+    /*we access the state of the cart using the selector hook */
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const handleRemoveFromCart = (cartItem) => {
+        dispatch(removeFromCart(cartItem));
+    }
   return (
-    <>
-      <section className='cart-items'>
-        <div className='container d_flex'>
-          {/* if hamro cart ma kunai pani item xaina bhane no diplay */}
-
-          <div className='cart-details'>
-            {CartItem.length === 0 && <h1 className='no-items product'>No Items are add in Cart</h1>}
-
-            {/* yasma hami le cart item lai display garaaxa */}
-            {CartItem.map((item) => {
-              const productQty = item.price * item.qty
-
-              return (
-                <div className='cart-list product d_flex' key={item.id}>
-                  <div className='img'>
-                    <img src={item.cover} alt='' />
-                  </div>
-                  <div className='cart-details'>
-                    <h3>{item.name}</h3>
-                    <h4>
-                      ${item.price}.00 * {item.qty}
-                      <span>${productQty}.00</span>
-                    </h4>
-                  </div>
-                  <div className='cart-items-function'>
-                    <div className='removeCart'>
-                      <button className='removeCart'>
-                        <i className='fa-solid fa-xmark'></i>
-                      </button>
-                    </div>
-                    {/* stpe: 5 
-                    product ko qty lai inc ra des garne
-                    */}
-                    <div className='cartControl d_flex'>
-                      <button className='incCart' onClick={() => addToCart(item)}>
-                        <i className='fa-solid fa-plus'></i>
-                      </button>
-                      <button className='desCart' onClick={() => decreaseQty(item)}>
-                        <i className='fa-solid fa-minus'></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className='cart-item-price'></div>
-                </div>
-              )
-            })}
+    <div className="cart-container">
+      <h2>Panier</h2>
+      { cart.cartItems.length === 0 ? (
+          <div className="cart-empty">
+              <p>Votre panier est vide! </p>
+              <div className="start-shopping">
+                <Link to="/"> 
+                <FiShoppingCart style={{width:'20', height:'20'}} />
+                <span>Parcourez notre site et découvrez nos produits!</span>
+                </Link>
+              </div>
           </div>
 
-          <div className='cart-total product'>
-            <h2>Cart Summary</h2>
-            <div className=' d_flex'>
-              <h4>Total Price :</h4>
-              <h3>${totalPrice}.00</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}
+      ) : (<div>
 
-export default Cart
+          <div className="titles">
+              <h3 className="product-title">
+                  Produit
+              </h3>
+              <h3 className="price">
+                  Prix
+              </h3>
+              <h3 className="quantity">
+                  Quantité
+              </h3>
+              <h3 className="total">Total</h3>
+          </div>
+          <div className="cart-items">
+              {cart.cartItems?.map(cartItem => (
+                  <div className="cart-item" key={cartItem.id}>
+                    <div className="cart-product">
+                        <img src={cartItem.image} alt={cartItem.name}/>
+                        <div>
+                            <h3>{cartItem.name}</h3>
+                            <p>{cartItem.description}</p>
+                            <button onClick= {() => handleRemoveFromCart(cartItem)}> Supprimer </button>
+                            <div className="cart-product-price">
+                                {cartItem.store_price}dt
+                            </div>
+                            <div className="cart-product-quantity">
+                            <button>-</button>
+                            <div className="count">{cartItem.cartQuantity}</div>
+                                <button>+</button>
+                        </div>
+                        </div>
+                        <div className="cart-product-total-price">
+                            {cartItem.store_price * cartItem.cartQuantity}dt
+                        </div>
+                        </div>  
+                  </div>
+                  
+                  
+              ))}
+          </div>
+          <div className="cart-summary">
+              <button className="clear-cart">Vider le panier</button>
+              <div className="cart-checkout">
+                  <div className="subtotal">
+                      <span>Sous-total</span>
+                      <span className="amount">
+                          {cart.cartTotalAmount}dt
+                      </span>
+                  </div>
+                  <button>COMMANDER</button>
+                  <div className="continue-shopping">
+                      <Link to="/">
+                          <AiOutlineArrowLeft style={{ width:'20', height: '20'}}/>
+                          <span>Poursuivre votre shopping</span>
+
+                      </Link>
+                  </div>
+              </div>
+          </div>
+      </div>)}
+    </div>
+  );
+};
+
+export default Cart;

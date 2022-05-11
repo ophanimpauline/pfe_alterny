@@ -90,7 +90,9 @@ const Headerpfe = () => {
     <>
       <Infobar />
       <Container>
+        
         <Logo>ALTERNY</Logo>
+        
         <Wrapper>
         <SearchBar>
           <SearchInput placeholder="Cherchez un produit, une catégorie ou une marque"/>
