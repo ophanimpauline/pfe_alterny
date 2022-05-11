@@ -9,7 +9,7 @@ import Register from "./pages/Register";
 import Layout from "./Hocs/Layout";
 import Cart from "./components/Cart";
 import NotFound from "./pages/NotFound";
-import Wishlist from "./pages/Wishlist";
+import Wishlist from "./components/Wishlist";
 import Profileuser from "./pages/Profileuser";
 import Profileseller from "./pages/Profileseller";
 import Filtertest from "./pages/Filtertest";

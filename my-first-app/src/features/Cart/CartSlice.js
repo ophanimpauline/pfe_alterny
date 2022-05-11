@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+const DB_URL = "https://0010-197-14-11-2.ngrok.io";
+
+const cart = JSON.parse(localStorage.getItem('cart'));
 
 const initialState = {
   /*the global object is the local storage
@@ -7,12 +12,25 @@ const initialState = {
   carItems. first we check if there is anything there, then cartItems receives
   what's in that object in the localstorage, else, it rececives
   an empty array */
+  cart: cart ? cart : null,
   cartItems: localStorage.getItem("cartItems")
     ? JSON.parse(localStorage.getItem("cartItems"))
     : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
+  status: null,
 };
+/*this request creates a cart in the data base and returns the id of the cart */
+export const cartFetch = createAsyncThunk(
+  "cart/cartFetch",
+  async () => {
+    const response = await axios.post(DB_URL + "/store/carts/add");
+    if (response.data){
+      localStorage.setItem('cart', JSON.stringify(response.data.id))
+    }
+    return response.data
+  }
+)
 
 const cartSlice = createSlice({
   name: "cart",
@@ -107,6 +125,19 @@ const cartSlice = createSlice({
       state.cartTotalAmount = total;
     }
   },
+  extraReducers: {
+    [cartFetch.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [cartFetch.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.items = action.payload;
+    },
+    [cartFetch.rejected]: (state, action) => {
+      state.status = "rejected";
+
+    },
+  }
 });
 
 export const { addToCart, removeFromCart, decreaseCart, clearCart, getTotals } = cartSlice.actions;
