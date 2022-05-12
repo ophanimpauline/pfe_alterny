@@ -1,3 +1,5 @@
 my-first-app/src/components/PictureUploader.js
 my-first-app/src/pages/Wishlist.jsx
 my-first-app/src/pages/Wishlist.jsx
+my-first-app/src/features/auth/authService.js
+my-first-app/src/features/auth/authSlice.js

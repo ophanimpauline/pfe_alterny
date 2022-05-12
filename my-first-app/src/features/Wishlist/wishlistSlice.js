@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {baseURL} from "axios";
 
 const initialState = {
   wishlistItems: localStorage.getItem("wishlistItems")

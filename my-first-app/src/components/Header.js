@@ -112,7 +112,11 @@ const Headerpfe = () => {
           {/*i added the links but review this again if it's correct or nah */}
           <Text>
           <span>
-            Créer un compte </span> <br /> <span> Connexion{" "}
+            <Link to ="/signup" style={{ textDecoration: 'none', color:'gray'}} > 
+            Créer un compte 
+            </Link>
+            </span> 
+            <br /> <span>  <Link to ="/signup" style={{ textDecoration: 'none', color:'gray'}} > Connexion{" "} </Link>
             </span>
             </Text>
             

@@ -1,167 +1,152 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-//we're importing all the http requests from the service file
-import authService from './authService'
-//this is where we find all the reducers and the initial states 
-// Get user from localStorage, jwt token, we parse it bcs local storage can only have strings
-const user = JSON.parse(localStorage.getItem('user'))
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "../api/axios";
+import jwtDecode from "jwt-decode";
+const token = JSON.parse(localStorage.getItem('token'));
+//check what the token is named 
 const initialState = {
-//if there's a user in local storage, use it, else it will be null
-  user: user ? user : null,
-  isError: false,
-  isSuccess: false,
-  isLoading: false,
-  message: '',
-  //profile: profile ? profile : null,
-  /*access: localStorage.getItem('access'),
-  refresh: localStorage.getItem('refresh'),
-  isAuthenticated: null,*/
-}
-
-// Register user
-export const register = createAsyncThunk(
-  'auth/register',
-  async (user, thunkAPI) => {
+  token: token ? token: null,
+  first_name: "",
+  last_name: "",
+  username: "",
+  type: "1",
+  email: "",
+  password: "",
+  re_password: "",
+  uuid: "" /*check if this is the name of id of the user */,
+  registerStatus:
+    "" /* this will either be pending, fullfilled or rejected, we use it to showcase errors if there are any*/,
+  registerError: "",
+  loginStatus:
+    "" /* this will either be pending, fullfilled or rejected, we use it to showcase errors if there are any*/,
+  loginError: "",
+  userLoaded: false,
+};
+/*remarque: we will be getting the username and password
+as payload from our token */
+/**here we're sending the values necessary to create a user and what we get back is a token, so we store the response of this request in a const named token */
+export const registerUser = createAsyncThunk(
+  "auth/registerUser",
+  async (values, { rejectWithValue }) => {
     try {
-      return await authService.register(user)
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
+      const response = await axios.post("/auth/users/", {
+        first_name: values.first_name,
+        last_name: values.last_name,
+        username: values.email,
+        type: values.type,
+        email: values.email,
+        password: values.password,
+        re_password: values.re_password,
+      }, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      localStorage.setItem("user", response.data);
+      console.log(response.data); //here we save the token to our local storage
+      return response.data;
+    } catch (err) {
+      console.log(err.response.data);
+      return rejectWithValue(err.response.data);
     }
   }
-)
+);
 
+export const loginUser = createAsyncThunk('auth/loginUser', async(values, {rejectWithValue}) => {
+  try {
+    const response = await axios.post('', {
+      email: values.email,
+      password: values.password,
+    });
+    localStorage.setItem("user", response.data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error.response);
+    return rejectWithValue(error.response.data);
+  }
+} );
 
-
-// Login user
-export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
-  try {
-    return await authService.login(user)
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
-      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
-    return thunkAPI.rejectWithValue(message)
-  }
-})
-//view profile
-export const viewProfile = createAsyncThunk('users/uid', async (user, thunkAPI) => {
-  try {
-    return await authService.viewProfile(user)
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
-      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
-    return thunkAPI.rejectWithValue(message)
-  }
-})
-// post profile
-export const postProfile  = createAsyncThunk('URL TA3 SENDING EL EL PROFILE', async (profile, thunkAPI) => {
-  try {
-    return await authService.postProfile(profile)
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
-      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
-    return thunkAPI.rejectWithValue(message)
-  }
-})
-
-//update profile
-export const updateProfile = createAsyncThunk('users/update/uid', async (profile, thunkAPI) => {
-  try {
-    return await authService.updateProfile(profile)
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
-      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
-    return thunkAPI.rejectWithValue(message)
-  }
-})
-// verification 
-export const verify = createAsyncThunk ('auth/verify', async (user, thunkAPI) => {
+export const getUser = createAsyncThunk("auth/getUser", async(uuid, {rejectWithValue}) => {
   try{
-    return await authService.verify(user)
-  }catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
-      //in case there is an error, the thunkAPI is gonna reject and pass in the error message as the payload
-    return thunkAPI.rejectWithValue(message) 
-
+    const response = await axios.get(`/${id}`, setHeaders());
+    localStorage.setItem("user", response.data);
+    return token.data;
+  }catch(error){
+    console.log(error.response);
+    return rejectWithValue(error.response.data);
   }
-})
+});
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await authService.logout()
-})
-//export const goog
-
-export const authSlice = createSlice({
-  name: 'auth',
+const authSlice = createSlice({
+  name: "auth",
   initialState,
-  //these reducers are gonna be synchronous, anything async goes in the extra reducers
   reducers: {
-    //it's a function that sets all the values back to their initial state, aka, false after the user registers//
-    //we're dispatching this function after the user logs in
-    reset: (state) => {
-      state.isLoading = false
-      state.isSuccess = false
-      state.isError = false
-      state.message = ''
-    }, 
+    loadUser(state, action){
+      const token = state.token;
+      if (token){
+        const user = jwtDecode(token);
+        return{
+          ...state,
+          token,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          username: user.username,
+          type: user.type,
+          email: user.type,
+          password: user.password,
+          re_password: user.re_password,
+          uuid: user.uuid,
+          userLoaded: true,
+        };
+      } else return {...state, userLoaded: true};
+    },
+    logoutUser(state, action){
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token,
+        first_name: "",
+        last_name: "",
+        username: "",
+        type: "",
+        email: "",
+        password: "",
+        re_password: "",
+        uuid: "",
+        registerStatus: "",
+        registerError:"",
+        loginStatus:"",
+        loginError:"",
+      };
+    },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(register.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        //so here the payload is the payload sent by the thunkAPI, it is the error message of the request, we're setting the message of the state as the error message
-        state.message = action.payload
-        state.user = null
-      })
-      .addCase(login.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
-      })
-      .addCase(login.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-        state.user = null
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null
-      })
+    builder.addCase(registerUser.pending, (state, action) => {
+      return { ...state, resgisterStatus: "pending" };
+    });
+    builder.addCase(registerUser.fulfilled, (state, action) => {
+      if (action.payload) {
+        //we are decoding the jwt that's given back from the action payload so we can update the values of the state with it
+        const user = jwtDecode(action.payload);
+        return {
+          ...state,
+          token: action.payload,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          username: user.username,
+          email: user.email,
+          uuid: user.uuid,
+          registerStatus: "success",
+        };
+      } else return state;
+    });
+    builder.addCase(registerUser.rejected, (state, action) => {
+      return {
+        ...state,
+        registerStatus: "rejected",
+        registerError: action.payload,
+      };
+    });
   },
-})
-//export the reducers we need 
-export const { reset } = authSlice.actions
-//we always have to export the slice itself
-export default authSlice.reducer
+});
+
+export default authSlice.reducer;

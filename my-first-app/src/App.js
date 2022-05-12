@@ -5,7 +5,7 @@ import Activation from "./pages/Activation";
 import ResetPassword from "./pages/ResetPassword";
 import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Register from "./components/Register";
 import Layout from "./Hocs/Layout";
 import Cart from "./components/Cart";
 import NotFound from "./pages/NotFound";
@@ -25,13 +25,12 @@ const App = () => (
       <ToastContainer />
       <Layout>
         <Routes>
+          <Route path="/" exact element={<Acceuil />} />
         <Route path="/Filter" element={<Filtertest/>}></Route>
           <Route path="/Cart" element={<Cart />}></Route>
           <Route path="/Cart/:id" element={<Cart />}></Route>
           <Route path="/Wishlist" element={<Wishlist />}></Route>
           <Route path="/Profile" element={<Profileuser />}></Route>
-          <Route path="/not-found" element={<NotFound />}></Route>
-          <Route path="/" exact element={<Acceuil />} />
           <Route path="/Profilevendeur" element={<Profileseller />}></Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
@@ -41,6 +40,8 @@ const App = () => (
             element={<ResetPasswordConfirm />}
           />
           <Route path="/activate/:uid/:token" element={<Activation />} />
+          <Route path="/not-found" element={<NotFound />}></Route>
+          <Route to="/not-found" />
           {/*need to add a redirection to not found when typing in false urls */}
         </Routes>
       </Layout>
