@@ -72,7 +72,6 @@ export const loginUser = createAsyncThunk(
       });
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
-      
       console.log('hiiiiiii',response.data);
       return response.data ;
     } catch (err) {

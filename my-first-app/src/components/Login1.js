@@ -14,10 +14,10 @@ const Login1 = () => {
   });
 
   useEffect(() => {
-    if (auth._id) {
+    if (auth.uuid) {
       navigate("/cart");
     }
-  }, [auth._id, navigate]);
+  }, [auth.uuid, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const Login1 = () => {
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="mot de passe"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
         <button>

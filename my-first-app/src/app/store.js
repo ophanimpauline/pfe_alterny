@@ -7,12 +7,14 @@ import wishlistReducer, {getTotals1 } from '../features/Wishlist/wishlistSlice';
 import favstoresReducer from '../features/FavStores/favstoresSlice';
 import authReducer, { loadUser } from '../features/auth/authSlice';
 import sliderReducer, { imagesFetch } from '../features/sliderSlice';
+import profileReducer, { getProfile, updateProfile } from '../features/profileSlice';
 
 
 //we import the slices as any name we want, then we affect the actual reducer to that name inside the reducers
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    profile: profileReducer,
     cart: cartReducer,
     wishlist: wishlistReducer,
     favstores: favstoresReducer,
@@ -29,6 +31,8 @@ export const store = configureStore({
 
 // this will dispatch our action creater and createasynch thunk
  store.dispatch(productsFetch());
+ store.dispatch(getProfile());
+ store.dispatch(updateProfile());
  store.dispatch(imagesFetch());
  store.dispatch(productsSearch());
  store.dispatch(cartFetch());
