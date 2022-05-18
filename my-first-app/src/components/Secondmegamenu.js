@@ -1,7 +1,7 @@
 //importing bootstrap 5 css
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import './App.css';
+import '../App.css';
 function Secondmegamenu() {
   return (
    
@@ -16,7 +16,7 @@ function Secondmegamenu() {
         <div id="navbarSupportedContent" className="collapse navbar-collapse">
             <ul className="navbar-nav mx-auto">
            
-            <li className="nav-item dropdown megamenu"><a id="megamneu" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" className="nav-link dropdown-toggle font-weight-bold text-uppercase dropdown-toggle">Mega Menu</a>
+            <li className="nav-item dropdown megamenu"><a id="megamneu" href="#" data-bs-toggle="dropdown" aria-expanded="false" className="nav-link dropdown-toggle font-weight-bold text-uppercase dropdown-toggle">Mega Menu</a>
                 <div aria-labelledby="dropdownMenuButton1" className="dropdown-menu border-0 p-0 m-0">
                 <div className="container">
                     <div className="row bg-white rounded-0 m-0 shadow-sm">
@@ -75,7 +75,7 @@ function Secondmegamenu() {
         </div>
         </nav>
         
-        
+        {/*
       
         <section className="py-5 text-white">
         <div className="container py-4">
@@ -94,7 +94,7 @@ function Secondmegamenu() {
             </div>
             </div>
         </div>
-        </section>
+  </section>*/}
        
   </div>
   );

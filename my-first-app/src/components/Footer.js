@@ -266,9 +266,9 @@ export default function Footer2() {
       <BottomBar>
         {menu.map(({ name, links }) => (
           <Menu>
-            <MenuHead>{name}</MenuHead>
+            <MenuHead key={menu.name}>{name}</MenuHead>
             {links.map(({ title, url }) => (
-              <MenuLink href={url}>{title}</MenuLink>
+              <MenuLink key= { links.title}href={url}>{title}</MenuLink>
             ))}
           </Menu>
         ))}

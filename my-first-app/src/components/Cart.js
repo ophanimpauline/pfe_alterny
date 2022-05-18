@@ -3,7 +3,14 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { addToCart, decreaseCart, removeFromCart, clearCart, getTotals } from "../features/Cart/cartSlice";
+import {
+  addToCart,
+  decreaseCart,
+  removeFromCart,
+  clearCart,
+  getTotals,
+} from "../features/Cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 /*we want to check if the cart is empty we show another interface
 if not, we show the products, so we need to use the useSelector
@@ -12,7 +19,9 @@ react redux */
 const Cart = () => {
   /*we access the state of the cart using the selector hook */
   const cart = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   /* this will be called whenever our component renders it's for
   calculating the total and total quantity, and also whenever any chance happens*/
   useEffect(() => {
@@ -26,11 +35,11 @@ const Cart = () => {
     dispatch(decreaseCart(cartItem));
   };
   const handleIncreaseCart = (cartItem) => {
-      dispatch(addToCart(cartItem));
-  }
+    dispatch(addToCart(cartItem));
+  };
   const handleClearCart = () => {
-      dispatch(clearCart());
-  }
+    dispatch(clearCart());
+  };
   return (
     <div className="cart-container">
       <h2>Panier</h2>
@@ -72,7 +81,9 @@ const Cart = () => {
                         -
                       </button>
                       <div className="count">{cartItem.cartQuantity}</div>
-                      <button onClick={() => handleIncreaseCart(cartItem)}>+</button>
+                      <button onClick={() => handleIncreaseCart(cartItem)}>
+                        +
+                      </button>
                     </div>
                   </div>
                   <div className="cart-product-total-price">
@@ -83,13 +94,20 @@ const Cart = () => {
             ))}
           </div>
           <div className="cart-summary">
-            <button className="clear-cart" onClick={() => handleClearCart()}>Vider le panier</button>
+            <button className="clear-cart" onClick={() => handleClearCart()}>
+              Vider le panier
+            </button>
             <div className="cart-checkout">
               <div className="subtotal">
                 <span>Sous-total</span>
                 <span className="amount">{cart.cartTotalAmount}dt</span>
               </div>
-              <button>COMMANDER</button>
+              {auth.uuid ? (
+                <button>COMMANDER</button>
+              ) : (
+                <button onClick={() => navigate("/login")}>Se connecter</button>
+              )}
+
               <div className="continue-shopping">
                 <Link to="/">
                   <AiOutlineArrowLeft style={{ width: "20", height: "20" }} />

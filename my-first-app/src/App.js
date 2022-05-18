@@ -5,6 +5,7 @@ import Activation from "./pages/Activation";
 import ResetPassword from "./pages/ResetPassword";
 import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
 import Login from "./pages/Login";
+import Login1 from "./components/Login1";
 import Register from "./components/Register";
 import Layout from "./Hocs/Layout";
 import Cart from "./components/Cart";
@@ -32,7 +33,7 @@ const App = () => (
           <Route path="/Wishlist" element={<Wishlist />}></Route>
           <Route path="/Profile" element={<Profileuser />}></Route>
           <Route path="/Profilevendeur" element={<Profileseller />}></Route>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login1 />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route

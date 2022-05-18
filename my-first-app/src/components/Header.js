@@ -1,9 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Infobar from "./Infobar";
-import { useSelector } from "react-redux";
-import { FiSearch, FiUser, FiShoppingCart, FiHeart } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  FiUser,
+  FiShoppingCart,
+  FiHeart,
+  FiLogOut,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../features/auth/authSlice";
+import Search from "./Search";
+import { productsSearch } from "../features/productsSlice";
 
 const Container = styled.div`
   height: 85px;
@@ -20,19 +28,19 @@ const Logo = styled.h1`
   grid-column: 1 / 2;
   justify-self: center;
 `;
-const Wrapper = styled.div`
- max-width: 31.25rem;
+/*const Wrapper = styled.div`
+  max-width: 31.25rem;
   grid-column: 2 / 4;
   justify-self: center;
   align-self: center;
-`
+`;
 const SearchBar = styled.div`
-width: 100%;
-display: flex;
-flex-direction:row;
-align-items: center;
-`
-const SearchInput = styled.input `
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+const SearchInput = styled.input`
   width: 400px;
   height: 2.8rem;
   background: #f5f5f5;
@@ -41,7 +49,7 @@ const SearchInput = styled.input `
   border-radius: 1.625rem;
   padding: 0 3.5rem 0 1.5rem;
   font-size: 1rem;
-`
+`;
 const SearchSubmit = styled.button`
   width: 3.5rem;
   height: 2.8rem;
@@ -50,7 +58,8 @@ const SearchSubmit = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
-`
+`;*/
+
 const Right = styled.div`
   display: flex;
   grid-column: 4 / 5;
@@ -81,57 +90,79 @@ const Text = styled.small`
   font-size: 15px;
   cursor: pointer;
   color: #686868;
-  &:hover{
+  &:hover {
     text-decoration: underline;
   }
 `;
 
 const Headerpfe = () => {
-  const {cartTotalQuantity} = useSelector(state => state.cart)
+  const dispatch = useDispatch();
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
+  const product = useSelector((state) => state.product); 
   return (
     <>
       <Infobar />
       <Container>
-        
         <Logo>ALTERNY</Logo>
-        
-        <Wrapper>
-        <SearchBar>
-          <SearchInput placeholder="Cherchez un produit, une catégorie ou une marque"/>
-          <SearchSubmit><FiSearch/></SearchSubmit>
-      
-        </SearchBar>
+        <Search/>
 
-        </Wrapper>
         <Right>
           <User>
-            <Link to ="/Profile">
-            <FiUser />
+            <Link to="/Profile">
+              <FiUser />
             </Link>
           </User>
-          {/*i added the links but review this again if it's correct or nah */}
-          <Text>
-          <span>
-            <Link to ="/signup" style={{ textDecoration: 'none', color:'gray'}} > 
-            Créer un compte 
-            </Link>
-            </span> 
-            <br /> <span>  <Link to ="/signup" style={{ textDecoration: 'none', color:'gray'}} > Connexion{" "} </Link>
+
+      
+          {auth.uuid ? (
+            <>
+              {" "}
+              <Text>
+                {" "}
+                <FiLogOut onClick={() => {
+                  dispatch(logoutUser(null));
+
+                }}/>{" "}
+              </Text>
+            </>
+          ) : (
+            <>
+            <Text>
+            <span>
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                Créer un compte
+              </Link>
             </span>
-            </Text>
-            
+            <br />{" "}
+            <span>
+              {" "}
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                {" "}
+                Connexion{" "}
+              </Link>
+            </span>
+          </Text>
+             </>
+          )}
           <Shoppingcart>
-          <Link to="/Cart">
-            <FiShoppingCart />
-            <span className="bag-quantity">
-              <span>{cartTotalQuantity}</span>
-            </span>
+            <Link to="/Cart">
+              <FiShoppingCart />
+              <span className="bag-quantity">
+                <span>{cartTotalQuantity}</span>
+              </span>
             </Link>
           </Shoppingcart>
           <Heart>
-          <Link to="/Wishlist">
-            <FiHeart />
-             </Link>
+            <Link to="/Wishlist">
+              <FiHeart />
+            </Link>
           </Heart>
         </Right>
       </Container>

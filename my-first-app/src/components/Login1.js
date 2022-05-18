@@ -1,64 +1,50 @@
-import React from "react";
-import "./Login.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import {connect} from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login1 = () => {
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const [user, setUser] = useState({
     email: "",
     password: "",
   });
-  const [email, password] = formData;
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = (e) => {
+
+  useEffect(() => {
+    if (auth._id) {
+      navigate("/cart");
+    }
+  }, [auth._id, navigate]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    //action from the auth passing in the email and password
+    dispatch(loginUser(user));
   };
 
-  //is the user authenticated or not
-  //redirect to home page
-
   return (
-    <div>
-      <h1> SE CONNECTER </h1>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-            <input
-            type='email'
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={e => onChange(e)}
-            required
-            />
-            <input
-            type='password'
-            placeholder="Mot de passe"
-            name="password"
-            value={password}
-            onChange={e => onChange(e)}
-            required
-            />
-
-        </div>
-        <button>SE CONNECTER</button>
+    <>
+      <form onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <input
+          type="email"
+          placeholder="email"
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
+        />
+        <button>
+          {auth.loginStatus === "pending" ? "Submitting..." : "Login"}
+        </button>
+        {auth.loginStatus === "rejected" ? <p>{auth.loginError}</p> : null}
       </form>
-      <p className="mt-3">
-      <Link to="/signup"> Vous n'avez pas de compte? </Link>
-      </p>
-      <p className="mt-3">
-      <Link to="/reset-password"> Mot de passe oublié?  </Link>
-          
-      </p>
-      
-          
-    </div>
+    </>
   );
 };
-//const mapStateToProps = state => ({
-    //is authenticated 
-//})
 
-export default connect(null, { })(Login1);
+export default Login1;

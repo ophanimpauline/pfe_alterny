@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import cartReducer, { cartFetch, getTotals } from '../features/Cart/cartSlice';
-import productsReducer, { productsFetch } from '../features/productsSlice'
+import productsReducer, { productsFetch, productsSearch } from '../features/productsSlice'
 import { productsApi } from '../features/ProductApi';
 import categoriesReducer, { categoriesFetch } from '../features/CategoriesSlice';
 import wishlistReducer, {getTotals1 } from '../features/Wishlist/wishlistSlice';
 import favstoresReducer from '../features/FavStores/favstoresSlice';
-import authReducer from '../features/auth/authSlice';
+import authReducer, { loadUser } from '../features/auth/authSlice';
+import sliderReducer, { imagesFetch } from '../features/sliderSlice';
 
 
 //we import the slices as any name we want, then we affect the actual reducer to that name inside the reducers
@@ -17,6 +18,7 @@ export const store = configureStore({
     favstores: favstoresReducer,
     categories: categoriesReducer,
     products: productsReducer,
+    images: sliderReducer,
     [productsApi.reducerPath]: productsApi.reducer,
     
   },
@@ -27,8 +29,13 @@ export const store = configureStore({
 
 // this will dispatch our action creater and createasynch thunk
  store.dispatch(productsFetch());
+ store.dispatch(imagesFetch());
+ store.dispatch(productsSearch());
  store.dispatch(cartFetch());
  store.dispatch(getTotals());
+ store.dispatch(getTotals1());
+ store.dispatch(loadUser(null)); // it doesn't expect any parameter so it receives null
+ 
  store.dispatch(getTotals1());
  store.dispatch(categoriesFetch());
  

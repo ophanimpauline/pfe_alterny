@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Registration.css";
-import axios from "../features/api/axios";
 import styled from "styled-components";
 import { ImFacebook2 } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -26,26 +27,12 @@ const STitle = styled.div`
   font-size: 20px;
   margin-bottom: 10px;
 `;
-const CDP = styled.div`
-  width: 310px;
-  height: auto;
-`;
+
 const DP = styled.p`
   font-size: 14px;
   color: black;
 `;
-const HRA = styled.hr`
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-top: 1px solid gray;
-  width: 70%;
-`;
-const WrapperI = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 100px;
-`;
+
 /* const handleSubmit = async (e) => {
     e.preventDefault();
     //need to put these in the then thingy
@@ -113,12 +100,19 @@ function Register() {
     password: "",
     re_password: "",
   });
-  const [formErrors, setFormErrors] = useState({});
-
+  //const [formErrors, setFormErrors] = useState({});
+  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
   console.log(auth);
+  //not letting a logged in person access the registration route
 
-  const validate = (user) => {
+  useEffect(() => {
+    if (auth.uuid) {
+      navigate("/");
+    }
+  }, [auth.uuid, navigate]);
+
+  /* const validate = (user) => {
     const errors = {};
     if (!user.first_name) {
       errors.first_name = "Le nom est obligatoire";
@@ -141,125 +135,124 @@ function Register() {
         "Ce champs doit être identique à votre mot de passe!";
     }
     return errors;
-  };
+  };*/
   //setFormErrors(validate(user));
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerUser(user));
+    if (!user.last_name) {
+      toast.error("ce champs est obligatoire!");
+    } else if (!user.first_name) {
+      toast.error("ce champs est obligatoire!");
+    } else if (!user.email) {
+      toast.error("ce champs est obligatoire");
+    } else if (!EMAIL_REGEX.test(user.email)) {
+      toast.error("Tapez un email valide !");
+    } else if (!user.password) {
+      toast.error("ce champs est obligatoire");
+    } else if (!PWD_REGEX.test(user.password)) {
+      toast.error(
+        "Votre mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial et une longueur d'au moins 10"
+      );
+    } else if (user.password !== user.re_password) {
+      toast.error("Les mots de passe doivent etre identique!");
+    } else {
+      dispatch(registerUser(user));
+    }
+
+    return (
+      <>
+        <Container>
+          <WrapperG>
+            <Title>CRÉER VOTRE COMPTE</Title>
+            <STitle>S'inscrire avec Facebook:</STitle>
+
+            <button className="fluid ui button blue">
+              <ImFacebook2 style={{ color: "#4267B2" }} />
+              S'inscrire avec Facebook
+            </button>
+            <DP>
+              C'est facile, rapide et vous n'avez pas besoin de mémoriser un mot
+              de passe. Nous ne partagerons pas vos données et ne publierons
+              rien en votre nom.
+            </DP>
+          </WrapperG>
+          <hr style={{ size: "5px" }}></hr>
+
+          <form onSubmit={handleSubmit}>
+            <h1>S'inscrire avec votre e-mail: </h1>
+            <div className="ui divider"></div>
+            <div className="ui form">
+              <div className="field">
+                <label>Nom: * </label>
+                <input
+                  type="text"
+                  name="last_name"
+                  placeholder=""
+                  onChange={(e) => {
+                    setUser({ ...user, last_name: e.target.value });
+                  }}
+                />
+              </div>
+
+              <div className="field">
+                <label>Prénom: *</label>
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder=""
+                  onChange={(e) => {
+                    setUser({ ...user, first_name: e.target.value });
+                  }}
+                />
+              </div>
+
+              <div className="field">
+                <label>Adresse e-mail: *</label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder=""
+                  onChange={(e) => {
+                    setUser({ ...user, email: e.target.value });
+                  }}
+                />
+              </div>
+
+              <div className="field">
+                <label>Mot de passe: *</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder=""
+                  onChange={(e) => {
+                    setUser({ ...user, password: e.target.value });
+                  }}
+                />
+              </div>
+
+              <div className="field">
+                <label>Confirmer le mot de passe: *</label>
+                <input
+                  type="password"
+                  name="re_password"
+                  placeholder=""
+                  onChange={(e) => {
+                    setUser({ ...user, re_password: e.target.value });
+                  }}
+                  required
+                />
+              </div>
+
+              <button className="fluid ui button blue">S'INSCRIRE</button>
+            </div>
+          </form>
+        </Container>
+      </>
+    );
   };
-
-  return (
-    <>
-      <Container>
-        <WrapperG>
-          <Title>CRÉER VOTRE COMPTE</Title>
-          <STitle>S'inscrire avec Facebook:</STitle>
-
-          {/*<Button
-          variant="contained"
-          startIcon={<FcGoogle />}
-          disableElevation
-          sx={{
-            width: 300,
-            backgroundColor: "#000000",
-            fontFamily: "lato",
-          }}
-        >
-          CONTINUEZ AVEC GOOGLE
-        </Button>*/}
-          <button className="fluid ui button blue">
-            <ImFacebook2 style={{ color: "#4267B2" }} />
-            S'inscrire avec Facebook
-          </button>
-          <DP>
-            C'est facile, rapide et vous n'avez pas besoin de mémoriser un mot
-            de passe. Nous ne partagerons pas vos données et ne publierons rien
-            en votre nom.
-          </DP>
-        </WrapperG>
-        <hr style={{ size: "5px" }}></hr>
-
-        <form onSubmit={handleSubmit}>
-          <h1>S'inscrire avec votre e-mail: </h1>
-          <div className="ui divider"></div>
-          <div className="ui form">
-            <div className="field">
-              <label>Nom: * </label>
-              <input
-                type="text"
-                name="last_name"
-                placeholder=""
-                onChange={(e) => {
-                  setUser({ ...user, last_name: e.target.value });
-                  setFormErrors(validate(user));
-                } }
-              />
-            </div>
-            <span>{formErrors.last_name}</span>
-
-            <div className="field">
-              <label>Prénom: *</label>
-              <input
-                type="text"
-                name="first_name"
-                placeholder=""
-                onChange={(e) => {
-                  setUser({ ...user, first_name: e.target.value });
-                  setFormErrors(validate(user));
-                } }
-              />
-            </div>
-            <span>{formErrors.first_name}</span>
-            <div className="field">
-              <label>Adresse e-mail: *</label>
-              <input
-                type="text"
-                name="email"
-                placeholder=""
-                onChange={(e) => {
-                  setUser({ ...user, email: e.target.value });
-                  setFormErrors(validate(user));
-                } }
-              />
-            </div>
-            <span>{formErrors.email}</span>
-            <div className="field">
-              <label>Mot de passe: *</label>
-              <input
-                type="password"
-                name="password"
-                placeholder=""
-                onChange={(e) => {
-                  setUser({ ...user, password: e.target.value });
-                  setFormErrors(validate(user));
-                } }
-              />
-            </div>
-            <span>{formErrors.password}</span>
-
-            <div className="field">
-              <label>Confirmer le mot de passe: *</label>
-              <input
-                type="password"
-                name="re_password"
-                placeholder=""
-                onChange={(e) => {
-                  setUser({ ...user, re_password: e.target.value });
-                  setFormErrors(validate(user));
-                } }
-                required
-              />
-            </div>
-            <span>{formErrors.re_password}</span>
-            <button className="fluid ui button blue">S'INSCRIRE</button>
-          </div>
-        </form>
-      </Container>
-    </>
-  );
 }
 
 export default Register;

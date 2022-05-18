@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../api/axios";
 import jwtDecode from "jwt-decode";
-const token = JSON.parse(localStorage.getItem('token'));
-//check what the token is named 
+//we save the token in the user variable
+const user = localStorage.getItem("access");
+const refresh = localStorage.getItem("refresh");
+//check what the token is named
 const initialState = {
-  token: token ? token: null,
+  user: user ? user : null, // this variable has basic user data along with the token
+  refresh: refresh ? refresh: null,
   first_name: "",
   last_name: "",
   username: "",
@@ -28,82 +31,103 @@ export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (values, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/auth/users/", {
-        first_name: values.first_name,
-        last_name: values.last_name,
-        username: values.email,
-        type: values.type,
-        email: values.email,
-        password: values.password,
-        re_password: values.re_password,
-      }, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      localStorage.setItem("user", response.data);
-      console.log(response.data); //here we save the token to our local storage
+      const response = await axios.post(
+        "/auth/users/",
+        {
+          first_name: values.first_name,
+          last_name: values.last_name,
+          username: values.email,
+          type: values.type,
+          email: values.email,
+          password: values.password,
+          re_password: values.re_password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err.response.data);
+      if (!err?.response) {
+        return "No Server Response";
+      } else if (err.response?.status === 400) {
+        return "Cet email est déjà utilisé!";
+      } else {
+        return rejectWithValue(err.response.data);
+      }
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (values, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/auth/jwt/create/", {
+        email: values.email,
+        password: values.password,
+      });
+      localStorage.setItem("access", response.data.access);
+      localStorage.setItem("refresh", response.data.refresh);
+      
+      console.log('hiiiiiii',response.data);
+      return response.data ;
+    } catch (err) {
+      console.log('hello',err);
       return rejectWithValue(err.response.data);
     }
   }
 );
 
-export const loginUser = createAsyncThunk('auth/loginUser', async(values, {rejectWithValue}) => {
-  try {
-    const response = await axios.post('', {
-      email: values.email,
-      password: values.password,
-    });
-    localStorage.setItem("user", response.data);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.log(error.response);
-    return rejectWithValue(error.response.data);
+/*export const getUser = createAsyncThunk(
+  "auth/getUser",
+  async (uuid, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/${uuid}`, setHeaders());
+      localStorage.setItem("user", response.data);
+      return user.data;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response.data);
+    }
   }
-} );
-
-export const getUser = createAsyncThunk("auth/getUser", async(uuid, {rejectWithValue}) => {
-  try{
-    const response = await axios.get(`/${id}`, setHeaders());
-    localStorage.setItem("user", response.data);
-    return token.data;
-  }catch(error){
-    console.log(error.response);
-    return rejectWithValue(error.response.data);
-  }
-});
+);*/
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loadUser(state, action){
-      const token = state.token;
-      if (token){
-        const user = jwtDecode(token);
-        return{
+    loadUser(state, action) {
+      const token = state.user;
+      console.log(token)
+      if (token && token.access) {
+        console.log(token)
+        const values = jwtDecode(token.access);
+
+        return {
           ...state,
-          token,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          username: user.username,
-          type: user.type,
-          email: user.type,
-          password: user.password,
-          re_password: user.re_password,
-          uuid: user.uuid,
+          user,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          username: values.username,
+          type: values.type,
+          email: values.type,
+          password: values.password,
+          re_password: values.re_password,
+          uuid: values.uuid,
           userLoaded: true,
         };
-      } else return {...state, userLoaded: true};
+      } else return { ...state, userLoaded: true };
     },
-    logoutUser(state, action){
-      localStorage.removeItem("token");
+    // we want after the register we want to reset the values
+    logoutUser(state, action) {
+      localStorage.removeItem("user");
       return {
         ...state,
-        token,
+        user: "",
         first_name: "",
         last_name: "",
         username: "",
@@ -113,9 +137,10 @@ const authSlice = createSlice({
         re_password: "",
         uuid: "",
         registerStatus: "",
-        registerError:"",
-        loginStatus:"",
-        loginError:"",
+        registerError: "",
+        loginStatus: "",
+        loginError: "",
+        userLoaded: false,
       };
     },
   },
@@ -125,11 +150,9 @@ const authSlice = createSlice({
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
       if (action.payload) {
-        //we are decoding the jwt that's given back from the action payload so we can update the values of the state with it
-        const user = jwtDecode(action.payload);
         return {
           ...state,
-          token: action.payload,
+          user: action.payload,
           first_name: user.first_name,
           last_name: user.last_name,
           username: user.username,
@@ -146,7 +169,33 @@ const authSlice = createSlice({
         registerError: action.payload,
       };
     });
+    builder.addCase(loginUser.pending, (state, action) => {
+      return { ...state, loginStatus: "pending" };
+    });
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      if (action.payload) {
+        const user = {first_name: 'h', last_name: 'h', username: 'user', email:'email', uuid:'uuid'}
+        return {
+          ...state,
+          user: action.payload, 
+          first_name: user.first_name,
+          last_name: user.last_name,
+          username: user.username,
+          email: user.email,
+          uuid: user.uuid,
+          loginStatus: "success",
+        };
+      } else return state;
+    });
+    builder.addCase(loginUser.rejected, (state, action) => {
+      return {
+        ...state,
+        loginStatus: "rejected",
+        loginError: action.payload,
+      };
+    });
   },
 });
 
+export const { loadUser, logoutUser, reset } = authSlice.actions;
 export default authSlice.reducer;
