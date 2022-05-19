@@ -3,17 +3,13 @@ import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import axios from "../features/api/axios";
 
-const Wrapper = styled.div`
-  max-width: 31.25rem;
-  grid-column: 2 / 4;
-  justify-self: center;
-  align-self: center;
-`;
+
 const SearchBar = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: large;
 `;
 const SearchInput = styled.input`
   width: 400px;
@@ -23,7 +19,7 @@ const SearchInput = styled.input`
   border: none;
   border-radius: 1.625rem;
   padding: 0 3.5rem 0 1.5rem;
-  font-size: 1rem;
+  font-size: 0.90rem;
 `;
 const SearchSubmit = styled.button`
   width: 3.5rem;
@@ -55,7 +51,7 @@ function Search() {
 
   return (
     <div>
-      <Wrapper>
+      
         <SearchBar>
           <SearchInput
             value={query}
@@ -66,7 +62,7 @@ function Search() {
             <FiSearch />
           </SearchSubmit>
         </SearchBar>
-      </Wrapper>
+    
     </div>
   );
 }

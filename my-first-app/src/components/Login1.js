@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
 
 const Login1 = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login1 = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
         <input
           type="email"
@@ -38,8 +39,8 @@ const Login1 = () => {
           placeholder="mot de passe"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
-        <button>
-          {auth.loginStatus === "pending" ? "Submitting..." : "Login"}
+        <button style={{backgroundColor:"black", color:"white", border:"none", marginTop:"10px", marginBottom:"30px" ,padding:"20px 40px"}}>
+          {auth.loginStatus === "pending" ? "Chargement..." : "SE CONNECTER"}
         </button>
         {auth.loginStatus === "rejected" ? <p>{auth.loginError}</p> : null}
       </form>

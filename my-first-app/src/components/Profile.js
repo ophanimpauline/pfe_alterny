@@ -1,21 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {CgSmileSad } from "react-icons/cg"
+import { CgSmileSad } from "react-icons/cg";
 
 function Profile() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
-  const [profile, setProfile ] = useState({
-    phone1: "",
-    phone2: "",
-    birth_date: "",
-    zipcode: "",
-    street: "",
-    city: "",
-  });
+  
   return (
     <>
       {auth.uuid === "" ? (
@@ -25,7 +17,9 @@ function Profile() {
             <div className="start-shopping">
               <Link to="/signup">
                 <CgSmileSad style={{ width: "20", height: "20" }} />
-                <span>Inscrivez vous et parcourez notre variété de produits!</span>
+                <span>
+                  Inscrivez vous et parcourez notre variété de produits!
+                </span>
               </Link>
             </div>
           </div>
@@ -37,7 +31,10 @@ function Profile() {
               <h1>Vos informations: </h1>
               {/*a modification icon would be here, if you click on it it redirects you to the modification view */}
               <span style={{ cursor: "pointer" }}>
-                Editer vos informations <FiEdit />
+                Editer vos informations
+                <Link to="editprofile" style={{ textDecoration: "none" }}>
+                  <FiEdit />
+                </Link>
               </span>
               <div className="email">
                 <span>Email:</span>

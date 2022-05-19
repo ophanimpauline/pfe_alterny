@@ -42,18 +42,18 @@ body {
 
 
   
-  pre {
+  pre-registration {
     width: 70%;
     color: #fff;
     font-size: larger;
   }
   
-  button {
+  button-registration{
     background: #000000;
     padding: 20px 40px;
     color: #fff;
     border: none;
   }
-  p {
+  p-registration {
     color: red;
   }

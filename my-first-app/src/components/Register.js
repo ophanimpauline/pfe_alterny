@@ -169,7 +169,7 @@ function Register() {
             <Title>CRÉER VOTRE COMPTE</Title>
             <STitle>S'inscrire avec Facebook:</STitle>
 
-            <button className="fluid ui button blue">
+            <button className="button-registration">
               <ImFacebook2 style={{ color: "#4267B2" }} />
               S'inscrire avec Facebook
             </button>
@@ -246,7 +246,7 @@ function Register() {
                 />
               </div>
 
-              <button className="fluid ui button blue">S'INSCRIRE</button>
+              <button className="button-registration">S'INSCRIRE</button>
             </div>
           </form>
         </Container>

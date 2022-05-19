@@ -12,7 +12,7 @@ import Cart from "./components/Cart";
 import NotFound from "./pages/NotFound";
 import Wishlist from "./components/Wishlist";
 import Profileuser from "./pages/Profileuser";
-import Profileseller from "./pages/Profileseller";
+import ProfileEdit from "./components/ProfileEdit";
 import Filtertest from "./pages/Filtertest";
 
 import { ToastContainer } from "react-toastify";
@@ -32,7 +32,7 @@ const App = () => (
           <Route path="/Cart/:id" element={<Cart />}></Route>
           <Route path="/Wishlist" element={<Wishlist />}></Route>
           <Route path="/Profile" element={<Profileuser />}></Route>
-          <Route path="/Profilevendeur" element={<Profileseller />}></Route>
+          <Route path="/editprofile" element={<ProfileEdit />}></Route>
           <Route path="/login" element={<Login1 />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/reset-password" element={<ResetPassword />} />

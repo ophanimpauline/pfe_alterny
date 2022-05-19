@@ -27,6 +27,14 @@ const Logo = styled.h1`
   cursor: pointer;
   grid-column: 1 / 2;
   justify-self: center;
+  align-self: center;
+`;
+const Searchspace = styled.div`
+  max-width: 31.25rem;
+  grid-column: 2 / 4;
+  justify-self: center;
+  align-self: center;
+  padding: 4px;
 `;
 /*const Wrapper = styled.div`
   max-width: 31.25rem;
@@ -65,6 +73,8 @@ const Right = styled.div`
   grid-column: 4 / 5;
   justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: row;
 `;
 
 const User = styled.span`
@@ -105,11 +115,14 @@ const Headerpfe = () => {
       <Infobar />
       <Container>
         <Logo>ALTERNY</Logo>
+        <Searchspace> 
         <Search/>
+        </Searchspace>
 
         <Right>
           <User>
-            <Link to="/Profile">
+            <Link to="/Profile"
+            style={{ textDecoration: "none", color: "gray" }}>
               <FiUser />
             </Link>
           </User>
@@ -120,7 +133,10 @@ const Headerpfe = () => {
               {" "}
               <Text>
                 {" "}
-                <FiLogOut onClick={() => {
+                <FiLogOut
+                className="logout"
+                style={{height:"20px"}}
+                 onClick={() => {
                   dispatch(logoutUser(null));
 
                 }}/>{" "}
@@ -152,7 +168,8 @@ const Headerpfe = () => {
              </>
           )}
           <Shoppingcart>
-            <Link to="/Cart">
+            <Link to="/Cart"
+            style={{ textDecoration: "none", color: "gray"}}>
               <FiShoppingCart />
               <span className="bag-quantity">
                 <span>{cartTotalQuantity}</span>
@@ -160,7 +177,8 @@ const Headerpfe = () => {
             </Link>
           </Shoppingcart>
           <Heart>
-            <Link to="/Wishlist">
+            <Link to="/Wishlist"
+            style={{ textDecoration: "none", color: "gray" }}>
               <FiHeart />
             </Link>
           </Heart>

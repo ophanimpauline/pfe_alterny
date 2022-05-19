@@ -57,7 +57,7 @@ export const getProfile = createAsyncThunk(
   "profile/getProfile",
   async () => {
     try {
-      const response = await axios.get("/store/customers/me", token)
+      const response = await axios.get("/store/customers/me", {headers: {'Authorization' : `JWT ${token}` }})
       //localStorage.setItem("profile", response.data)
       return response.data;
     } catch (err) {
