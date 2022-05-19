@@ -14,7 +14,7 @@ import Wishlist from "./components/Wishlist";
 import Profileuser from "./pages/Profileuser";
 import ProfileEdit from "./components/ProfileEdit";
 import Filtertest from "./pages/Filtertest";
-
+import ProductDetail from "./components/ProductDetail";
 import { ToastContainer } from "react-toastify";
 
 //react router dom v6 syntax for routing
@@ -30,6 +30,7 @@ const App = () => (
       <Layout>
         <Routes>
           <Route path="/" exact element={<Acceuil />} />
+          <Route path="/testdetail" element={<ProductDetail/>}/>
         <Route path="/Filter" element={<Filtertest/>}></Route>
           <Route path="/Cart" element={<Cart />}></Route>
           <Route path="/Cart/:id" element={<Cart />}></Route>

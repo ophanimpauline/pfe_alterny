@@ -5,6 +5,7 @@ import { addToCart } from "../features/Cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 
 
+
 const Acceuil = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Acceuil = () => {
     dispatch(addToCart(product));
     
   };
+
   const handleAddToWishlist = (product) => {
     dispatch(addToWishlist(product));
   };
@@ -30,7 +32,7 @@ const Acceuil = () => {
               return (
                 <div key={product.id} className="product">
                   <h3>{product.title}</h3>
-                  <img src={product.image} alt={product.title} />
+                  <img  src={product.image} alt={product.title} />
                   <div className="details">
                     <span>{product.description}</span>
                     <span className="price">{product.store_price}dt</span>

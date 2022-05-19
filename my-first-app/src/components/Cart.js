@@ -11,6 +11,8 @@ import {
   getTotals,
 } from "../features/Cart/cartSlice";
 import { useNavigate } from "react-router-dom";
+import CartImages from "../components/CartImages";
+
 
 /*we want to check if the cart is empty we show another interface
 if not, we show the products, so we need to use the useSelector
@@ -18,6 +20,7 @@ hook to access the state of the cart, it's a hook from
 react redux */
 const Cart = () => {
   /*we access the state of the cart using the selector hook */
+ 
   const cart = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -52,6 +55,13 @@ const Cart = () => {
               <span>Parcourez notre site et découvrez nos produits!</span>
             </Link>
           </div>
+          {/*<div className="panier-images">
+            <img src={CartImages.img1} alt="image1" width="300px" height="600px"/>
+            <img src={CartImages.img2} alt="image2"/>
+            <img src={CartImages.img3} alt="image3"/>
+            <img src={CartImages.img4} alt="image4"/>
+
+      </div>*/}
         </div>
       ) : (
         <div>
