@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import jwtDecode from "jwt-decode";
 import axios from "./api/axios";
-
+//we create a constant named token that receives the access token from the local storage
 const token =  localStorage.getItem("access");
+//we set an item in the local storage named token that has that value
 localStorage.setItem("token", token)
-console.log(token)
+// we create an object user that receives the user_id, after decoding the token 
+const user = jwtDecode(token).user_id
+
 
 const initialState = {
-  //profile: profile ? profile : null,
   token: token ? token : null, 
-  user: "",
+  user: user ? user : null ,
   phone1: "",
   phone2: "",
   birth_date: "",
@@ -25,9 +28,9 @@ export const updateProfile = createAsyncThunk(
   async (values, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `/store/users/update/${values.uuid}`,
+        `/store/users/update/${user}`,
         {
-          user: values.uuid,
+          user: user,
           phone1: values.phone1,
           phone2: values.phone2,
           birthday: values.birthday,
@@ -35,10 +38,7 @@ export const updateProfile = createAsyncThunk(
           street: values.street,
           city: values.city,
         },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        {headers: {'Authorization' : `JWT ${token}` }}
       );
       console.log(response.data);
       return response.data;
@@ -86,10 +86,36 @@ const profileSlice = createSlice({
           street: action.payload.street,
           city: action.payload.city,
           profileStatus: "success",
+          profileLoaded:"true"
         };
       } else return state;
     });
     builder.addCase(updateProfile.rejected, (state, action) => {
+      return {
+        ...state,
+        profileStatus: "rejected",
+        profileError: action.payload,
+      };
+    });
+    builder.addCase(getProfile.pending, (state, action) => {
+      return { ...state, profileStatus: "pending" };
+    });
+    builder.addCase(getProfile.fulfilled, (state, action) => {
+      if (action.payload) {
+        return {
+          ...state,
+          phone1: action.payload.phone1,
+          phone2: action.payload.phone2,
+          birth_date: action.payload.birth_date,
+          zipcode: action.payload.zipcode,
+          street: action.payload.street,
+          city: action.payload.city,
+          profileStatus: "success",
+          profileLoaded:"true"
+        };
+      } else return state;
+    });
+    builder.addCase(getProfile.rejected, (state, action) => {
       return {
         ...state,
         profileStatus: "rejected",

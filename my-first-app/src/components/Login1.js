@@ -16,7 +16,7 @@ const Login1 = () => {
 
   useEffect(() => {
     if (auth.uuid) {
-      navigate("/cart");
+      navigate("/");
     }
   }, [auth.uuid, navigate]);
 

@@ -19,6 +19,9 @@ import { ToastContainer } from "react-toastify";
 
 //react router dom v6 syntax for routing
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Profilepanier from "./pages/Profilepanier";
+import Profilewishlist from "./pages/Profilewishlist";
+import Profilestores from "./pages/Profilestores";
 
 const App = () => (
   <>
@@ -30,6 +33,9 @@ const App = () => (
         <Route path="/Filter" element={<Filtertest/>}></Route>
           <Route path="/Cart" element={<Cart />}></Route>
           <Route path="/Cart/:id" element={<Cart />}></Route>
+          <Route path="/profile-panier" element={<Profilepanier/>}></Route>
+          <Route path="/profile-wishlist" element={<Profilewishlist />}></Route>
+          <Route path="/profile-vendeurs" element={<Profilestores />}></Route>
           <Route path="/Wishlist" element={<Wishlist />}></Route>
           <Route path="/Profile" element={<Profileuser />}></Route>
           <Route path="/editprofile" element={<ProfileEdit />}></Route>

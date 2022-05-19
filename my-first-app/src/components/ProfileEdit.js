@@ -10,7 +10,6 @@ export default function ProfileEdit() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-
   const [profile, setProfile] = useState({
     user: auth.uuid,
     phone1: "",
@@ -27,65 +26,67 @@ export default function ProfileEdit() {
 
   return (
     <>
-      <form className="profile-edit" onSubmit={handleSubmit} >
+      <form className="profile-edit" onSubmit={handleSubmit}>
         <h1>Modifier vos informations: </h1>
+        <div className="profile-edit-small">
+          <input
+          style={{width:"250px", marginRight:"10px"}}
+            type="tel"
+            name="phone1"
+            placeholder="Numéro de téléphone * "
+            onChange={(e) => {
+              setProfile({ ...profile, phone1: e.target.value });
+            }}
+            pattern="[0-9]{8}"
+            required
+          />
 
-        <label>Téléphone 1: * </label>
-        <input
-          type="number"
-          name="phone1"
-          placeholder=""
-          onChange={(e) => {
-            setProfile({ ...profile, phone1: e.target.value });
-          }}
-        />
+          <input
+          style={{width:"250px"}}
+            type="tel"
+            name="phone2"
+            placeholder="Numéro de téléphone 2"
+            onChange={(e) => {
+              setProfile({ ...profile, phone2: e.target.value });
+            }}
+            
+          />
+        </div>
 
-        <label>Téléphone 2: </label>
         <input
-          type="number"
-          name="phone2"
-          placeholder=""
-          onChange={(e) => {
-            setProfile({ ...profile, phone2: e.target.value });
-          }}
-        />
-
-        <label>Date de naissance: </label>
-        <input
-          type="birthdate"
+        style={{marginTop:"15px", width:"250px",height:"30px"}}
+          type="date"
           name="birthdate"
-          placeholder=""
+          placeholder="Date de naissance"
           onChange={(e) => {
             setProfile({ ...profile, birthdate: e.target.value });
           }}
         />
 
-        <label>Code postal: *</label>
         <input
           type="text"
           name="zipcode"
-          placeholder=""
+          placeholder="Code postal"
           onChange={(e) => {
             setProfile({ ...profile, zipcode: e.target.value });
           }}
+          required
         />
 
-        <label>Rue: *</label>
         <input
           type="text"
-          name="re_password"
-          placeholder=""
+          name="street"
+          placeholder="Rue"
           onChange={(e) => {
             setProfile({ ...profile, street: e.target.value });
           }}
           required
         />
 
-        <label>Cité: *</label>
         <input
           type="text"
-          name="re_password"
-          placeholder=""
+          name="city"
+          placeholder="cité"
           onChange={(e) => {
             setProfile({ ...profile, city: e.target.value });
           }}

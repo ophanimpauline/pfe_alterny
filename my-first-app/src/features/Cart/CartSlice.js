@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-const DB_URL = "https://d22b-197-14-11-2.ngrok.io";
+const DB_URL = "https://8b96-197-14-11-2.ngrok.io";
 
 const cart = JSON.parse(localStorage.getItem('cart'));
 

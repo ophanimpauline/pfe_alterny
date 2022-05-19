@@ -320,29 +320,93 @@ login-p{
   color: red;
 }
 /*profile*/
+.profile-wrapper{
+  margin: 20px;
+}
+.profile-flex-box{
+  display:flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+}
+
+button.profile-cart{
+  background-color: #1db5c0;
+    padding: 20px 40px;
+    color: #3B3B3B;
+    border: lightgray;
+}
+button.profile-wishlist{
+  background-color: #1db5c0;
+  padding: 20px 40px;
+  color: #3B3B3B;
+  border: lightgray;
+}
+button.profile-vendeurs{
+  background-color: #1db5c0;
+  padding: 20px 40px;
+  color: #3B3B3B;
+  border: gray;
+}
+button.profile-profile{
+  background-color: #1db5c0;
+  padding: 20px 40px;
+  color: #3B3B3B;
+  border: gray;
+}
+.buttons-flex{
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 350px;
+  justify-self: flex-start;
+  font-size: 20px;
+}
+
 /*profile edit page*/
 .profile-edit{
   display:flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   margin-left: 30px;
   margin-bottom: 40px;
 }
-input[type="number"]{
-  width: 40%;
+profile-edit.input[type="tel"]{
   padding: 12px 20px;
   margin: 8px 0;
   outline: none;
+  
 }
-input[type="birthdate"]{
+h1{
+  margin-bottom: 10px;
+}
+profile-edit>input[type="date"]{
   width: 40%;
   padding: 12px 20px;
   margin: 8px 0;
   outline: none;
   justify-self: center;
+}
+profile-edit>input[type="text"]{
+  flex-basis: 100px;
+  height: 10px;
+  justify-self: flex-start;
+
+}
+.profile-edit-small{
+  display: flex;
+  align-items: row;
+  justify-content: space-between;
+  
 }
 .label{
   justify-self: center;
-}
 
+}
+.profile-edit button{
+  align-self: center;
+}
+.profile-edit button:hover{
+  background-color:#1db5c0;
+}
 
