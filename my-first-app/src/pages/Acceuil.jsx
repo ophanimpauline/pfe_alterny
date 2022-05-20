@@ -3,7 +3,7 @@ import { useGetAllProductsQuery } from "../features/ProductApi";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/Cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
-
+import {useNavigate } from "react-router-dom";
 
 
 const Acceuil = () => {
@@ -13,6 +13,7 @@ const Acceuil = () => {
     dispatch(addToCart(product));
     
   };
+  const navigate = useNavigate();
 
   const handleAddToWishlist = (product) => {
     dispatch(addToWishlist(product));
@@ -31,8 +32,8 @@ const Acceuil = () => {
             {data?.results.map((product) => {
               return (
                 <div key={product.id} className="product">
-                  <h3>{product.title}</h3>
-                  <img  src={product.image} alt={product.title} />
+                  <h3 onClick={() => navigate(`/product-detail/${product.id}`)} >  {product.title}</h3>
+                  <img  onClick={() => navigate(`/product-detail/${product.id}`)}src={product.image} alt={product.title} />
                   <div className="details">
                     <span>{product.description}</span>
                     <span className="price">{product.store_price}dt</span>

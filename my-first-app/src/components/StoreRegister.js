@@ -1,13 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import "./StoreRegister.css";
 import styled, { css } from "styled-components";
-import axios from '../api/axios';
+import axios from '../features/api/axios';
 import AnimatedShapes from "./AnimatedShapes";
 //import { Link, Redirect } from 'react-router-dom';
 
 const REGISTER_URL = '/auth/users/';
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
 const Container = styled.div`
   height: 100vh;
@@ -113,7 +111,7 @@ function StoreRegister() {
           <div className="field">
             <label>Description: *</label>
             <input
-              type="description"
+              type="text"
               name="description"
               placeholder=""
               value={formValues.description}

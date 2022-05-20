@@ -6,9 +6,9 @@ import StoreRegister from '../components/StoreRegister';
 export default function SellerRegistration() {
   return (
     <div>
-      <Header/>
+     
       <SellerRegister/>
-      <Footer/>
+    
     </div>
   )
 }

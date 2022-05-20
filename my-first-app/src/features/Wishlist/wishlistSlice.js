@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {baseURL} from "axios";
+import axios from '../api/axios'
 
 const initialState = {
   wishlistItems: localStorage.getItem("wishlistItems")

@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import "./Register.css";
 import styled, { css } from "styled-components";
-import axios from '../api/axios';
+import axios from '../features/api/axios';
 import AnimatedShapes from "./AnimatedShapes";
-//import { Link, Redirect } from 'react-router-dom';
+import {ImFacebook2} from "react-icons/im"
+import { Link} from 'react-router-dom';
 
 const REGISTER_URL = '/auth/users/';
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -29,6 +30,27 @@ const IntoShape = styled.div`
   clip-path: polygon(67% 0, 100% 0%, 100% 100%, 55% 100%);
   background-color: #FFB6C1;
 `;
+const COntainer = styled.div`
+  font-family: "lato";
+`;
+
+const WrapperG = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const Title = styled.div`
+  font-size: 30px;
+  margin: 25px;
+`;
+const STitle = styled.div`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
+
+const DP = styled.p`
+  font-size: 14px;
+  color: black;`
 
 function SellerRegister() {
   //data objects empty stored in initialValues
@@ -104,10 +126,27 @@ function SellerRegister() {
 
   return (
     <>
-      <Container>
-        <IntoShape/>
-        <AnimatedShapes/>
+   <Container>
+   {/*<WrapperG>
+            <Title>CRÉER VOTRE COMPTE</Title>
+            <STitle>S'inscrire avec Facebook:</STitle>
+
+            <button className="button-registration">
+              <ImFacebook2 style={{ color: "#4267B2" }} />
+              S'inscrire avec Facebook
+            </button>
+            <DP>
+              C'est facile, rapide et vous n'avez pas besoin de mémoriser un mot
+              de passe. Nous ne partagerons pas vos données et ne publierons
+              rien en votre nom.
+            </DP>
+  </WrapperG>*/}
         <div className="container">
+       
+        <IntoShape/>
+        <AnimatedShapes/> 
+        
+          <hr style={{ size: "5px" }}></hr>
       <form onSubmit={handleSubmit}>
         <h1>Créér un compte vendeur </h1>
         <div className="ui divider"></div>
@@ -169,7 +208,9 @@ function SellerRegister() {
             />
           </div>
           <p>{formErrors.re_password}</p>
+          <Link to="/store-register">
           <button className="fluid ui button blue">CONTINUER</button>
+          </Link>
         </div>
       </form>
       </div>

@@ -22,6 +22,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profilepanier from "./pages/Profilepanier";
 import Profilewishlist from "./pages/Profilewishlist";
 import Profilestores from "./pages/Profilestores";
+import SellerRegistration from "./pages/SellerRegistration";
+import StoreRegister from "./components/StoreRegister";
 
 const App = () => (
   <>
@@ -30,7 +32,7 @@ const App = () => (
       <Layout>
         <Routes>
           <Route path="/" exact element={<Acceuil />} />
-          <Route path="/testdetail" element={<ProductDetail/>}/>
+          <Route path="/product-detail/:id" element={<ProductDetail/>}/>
         <Route path="/Filter" element={<Filtertest/>}></Route>
           <Route path="/Cart" element={<Cart />}></Route>
           <Route path="/Cart/:id" element={<Cart />}></Route>
@@ -47,8 +49,10 @@ const App = () => (
             path="/password/reset/confirm/:uid/:token"
             element={<ResetPasswordConfirm />}
           />
+           <Route path="/store-register" element={<StoreRegister/>}/>
+          <Route path="/seller-register" element={<SellerRegistration/>}/>
           <Route path="/activate/:uid/:token" element={<Activation />} />
-          <Route path="/not-found" element={<NotFound />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
           <Route to="/not-found" />
           {/*need to add a redirection to not found when typing in false urls */}
         </Routes>

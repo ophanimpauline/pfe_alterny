@@ -5,9 +5,9 @@ import StoreRegister from '../components/StoreRegister';
 export default function StoreRegistration() {
   return (
     <div>
-      <Header/>
+      
       <StoreRegister/>
-      <Footer/>
+     
     </div>
   )
 }
