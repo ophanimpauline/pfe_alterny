@@ -13,10 +13,11 @@ const initialState = {
 export const productDetail = createAsyncThunk(
   "singleproduct/productDetail",
   async(id, thunkAPI) => {
-    const response = await axios.get(DB_URL + `/store/products/${id}`);
+    const response = await axios.get(DB_URL + `/store/products/54`);
     return response?.data;
   }
-)
+);
+
 export const productSize = createAsyncThunk(  
   "singleproduct/productSize",
   async(id, thunkAPI) => {
@@ -40,11 +41,6 @@ export const productSizeSelected = createAsyncThunk(
     return rejectWithValue(response.data);
   }
 );
- //export const productColors = createAsyncThunk(
-  // "singleproduct/productColors",
-   //async()
- //)
-
 
 
 

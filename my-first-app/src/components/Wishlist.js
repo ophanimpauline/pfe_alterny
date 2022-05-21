@@ -27,7 +27,7 @@ const Wishlist = () => {
       dispatch(clearwishlist());
   }
   return (
-    <div className="cart-container">
+    <div className="cart-container" style={{padding:"100px"}}>
       <h2>Liste des souhaits</h2>
       {wishlist.wishlistItems.length === 0 ? (
         <div className="cart-empty">
@@ -49,16 +49,16 @@ const Wishlist = () => {
             {wishlist.wishlistItems?.map((wishlistItem) => (
               <div className="cart-item" key={wishlistItem.id}>
                 <div className="cart-product">
-                  <img src={wishlistItem.image} alt={wishlistItem.name} />
+                  <img src={wishlistItem.images[1].image} alt={wishlistItem.name} style={{width:"200px", height:"300px"}} />
                   <div>
                     <h3>{wishlistItem.name}</h3>
-                    <p>{wishlistItem.description}</p>
+                    <p style={{color:"black"}}>{wishlistItem.description}</p>
                     <button onClick={() => handleRemoveFromWishlist(wishlistItem)}>
                       {" "}
                       Supprimer{" "}
                     </button>
                     <div className="cart-product-price">
-                      {wishlistItem.store_price}dt
+                      {wishlistItem.unit_price}dt
                     </div>
                   </div>
                 </div>
@@ -69,8 +69,8 @@ const Wishlist = () => {
             <button className="clear-cart" onClick={() => handleClearWishlist()}>Vider la liste des souhaits</button>
             <div className="cart-checkout">
               <div className="subtotal">
-                <span>Sous-total</span>
-                <span className="amount">{wishlist.wishlistTotalAmount}dt</span>
+               
+               
               </div>
               <button>COMMANDER</button>
               <div className="continue-shopping">

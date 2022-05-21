@@ -114,7 +114,11 @@ const Headerpfe = () => {
     <>
       <Infobar />
       <Container>
-        <Logo>ALTERNY</Logo>
+        <Logo>
+        <Link to="/" style={{textDecoration:"none", color:"#1db5c0"}}> 
+          ALTERNY
+          </Link>
+          </Logo>
         <Searchspace> 
         <Search/>
         </Searchspace>
@@ -171,11 +175,11 @@ const Headerpfe = () => {
             <Link to="/Cart"
             style={{ textDecoration: "none", color: "gray"}}>
               <FiShoppingCart />
+            </Link>
+          </Shoppingcart>
               <span className="bag-quantity">
                 <span>{cartTotalQuantity}</span>
               </span>
-            </Link>
-          </Shoppingcart>
           <Heart>
             <Link to="/Wishlist"
             style={{ textDecoration: "none", color: "gray" }}>

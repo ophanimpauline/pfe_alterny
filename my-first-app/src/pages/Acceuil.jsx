@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/Cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import {useNavigate } from "react-router-dom";
+import Carousel from "../components/Carousel"
 
 
 const Acceuil = () => {
@@ -21,6 +22,7 @@ const Acceuil = () => {
 
   return (
     <div className="home-container">
+      <Carousel/>
       {isLoading ? (
         <p>loading...</p>
       ) : error ? (
@@ -35,7 +37,7 @@ const Acceuil = () => {
                   <h3 onClick={() => navigate(`/product-detail/${product.id}`)} >  {product.title}</h3>
                   <img  onClick={() => navigate(`/product-detail/${product.id}`)}src={product.image} alt={product.title} />
                   <div className="details">
-                    <span>{product.description}</span>
+                   
                     <span className="price">{product.store_price}dt</span>
                   </div>
                   <button onClick={() => handleAddToCart(product)}>

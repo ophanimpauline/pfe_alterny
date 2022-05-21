@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Container = styled.div`
   height: 27px;
   width: 100%;
-  background-color: black;
+  background-color: #1db5c0;
   color: white;
   font-family: "lato";
   padding: 5px;

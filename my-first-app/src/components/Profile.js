@@ -3,6 +3,7 @@ import { FiEdit } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { CgSmileSad } from "react-icons/cg";
+import {FiUser} from "react-icons/fi";
 import { getProfile } from "../features/profileSlice";
 import "../App.css"
 
@@ -21,7 +22,8 @@ function Profile() {
     <>
       {auth.uuid === "" ? (
         <>
-          <div className="cart-empty">
+          <div className="cart-empty" style={{padding:"100px"}}>
+            <FiUser style={{fontSize:"50px", paddingBottom:"10px"}}/>
             <p>Vous n'avez pas encore de compte! </p>
             <div className="start-shopping">
               <Link to="/signup">
