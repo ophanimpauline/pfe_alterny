@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
 import axios from "../features/api/axios";
-
+import {useDispatch} from "react-redux"
+import { searchFetch } from "../features/searchSlice";
 
 const SearchBar = styled.div`
   width: 100%;
@@ -32,17 +33,23 @@ const SearchSubmit = styled.button`
 `;
 
 function Search() {
+  const dispatch = useDispatch();
 
   const [query, setQuery] = useState("");
-  const [data, setData] = useState([]);
-  useEffect(() => {
+  //const [data, setData] = useState([]);
+ /* useEffect(() => {
     const searchProducts = async () => {
       
       const response = await axios.get(`/store/products/search/?q=${query}`);
       setData(response.data);
     };
     searchProducts()
-  }, [query]);
+  }, [query]);*/
+  useEffect(() => {
+   
+     dispatch(searchFetch(query))
+    
+  }, [query, dispatch]);
 
   const onChangeSearch = (event) => {
     setQuery(event.currentTarget.value);

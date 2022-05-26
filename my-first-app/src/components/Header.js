@@ -132,7 +132,7 @@ const Headerpfe = () => {
           </User>
 
       
-          {auth.uuid ? (
+          {auth.loginStatus ? (
             <>
               {" "}
               <Text>

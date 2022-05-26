@@ -84,7 +84,7 @@ const Cart = () => {
                       Supprimer{" "}
                     </button>
                     <div className="cart-product-price">
-                      {cartItem.store_price}dt
+                      {cartItem.unit_price}dt
                     </div>
                     <div className="cart-product-quantity">
                       <button onClick={() => handleDecreaseCart(cartItem)}>
@@ -97,7 +97,7 @@ const Cart = () => {
                     </div>
                   </div>
                   <div className="cart-product-total-price">
-                    {cartItem.store_price * cartItem.cartQuantity}dt
+                    {cartItem.unit_price * cartItem.cartQuantity}dt
                   </div>
                 </div>
               </div>

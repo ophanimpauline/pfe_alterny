@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../api/axios";
 import jwtDecode from "jwt-decode";
+import {useSelector} from "react-redux";
 //we save the token in the user variable
 const user = localStorage.getItem("access");
 const refresh = localStorage.getItem("refresh");
+const accessToken = localStorage.getItem('access');
 //check what the token is named
 const initialState = {
   user: user ? user : null, // this variable has basic user data along with the token
@@ -19,8 +21,7 @@ const initialState = {
   registerStatus:
     "" /* this will either be pending, fullfilled or rejected, we use it to showcase errors if there are any*/,
   registerError: "",
-  loginStatus:
-    "" /* this will either be pending, fullfilled or rejected, we use it to showcase errors if there are any*/,
+  loginStatus: '',
   loginError: "",
   userLoaded: false,
 };
@@ -62,6 +63,28 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const getMe = createAsyncThunk(
+    "auth/getMe",
+    async (values, { rejectWithValue }) => {
+      console.log(accessToken)
+      if(accessToken){
+        
+        try {
+          const response = await axios.get("/store/customers/me", {headers: {'Authorization' : `JWT ${accessToken}` }})
+          //localStorage.setItem("profile", response.data)
+          if(response.data) {
+            // const auth = useSelector((state) => state.auth);
+            // auth.loginStatus = 'success'
+          }
+          return response.data;
+        } catch (err) {
+          return err.response.data;
+        }
+      }
+      return rejectWithValue("not logged in") ;
+    }
+);
+
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (values, { rejectWithValue }) => {
@@ -85,7 +108,7 @@ export const loginUser = createAsyncThunk(
   "auth/getUser",
   async (uuid, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/${uuid}`, setHeaders());
+      const response = await axios.get(/${uuid}, setHeaders());
       localStorage.setItem("user", response.data);
       return user.data;
     } catch (error) {
@@ -123,7 +146,8 @@ const authSlice = createSlice({
     },
     // we want after the register we want to reset the values
     logoutUser(state, action) {
-      localStorage.removeItem("user");
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
       return {
         ...state,
         user: "",
@@ -137,13 +161,16 @@ const authSlice = createSlice({
         uuid: "",
         registerStatus: "",
         registerError: "",
-        loginStatus: "",
+        loginStatus: '',
         loginError: "",
         userLoaded: false,
       };
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getMe.fulfilled, (state, action) => {
+      return { ...state, loginStatus: "success" };
+    });
     builder.addCase(registerUser.pending, (state, action) => {
       return { ...state, resgisterStatus: "pending" };
     });

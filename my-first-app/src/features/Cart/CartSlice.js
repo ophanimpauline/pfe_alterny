@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-const DB_URL = "https://0083-197-14-11-2.ngrok.io";
+const DB_URL = "https://6525-197-238-7-226.ngrok.io";
 
 const cart = JSON.parse(localStorage.getItem('cart'));
 
@@ -111,8 +111,8 @@ const cartSlice = createSlice({
       an array function as a callback method and an initial value */
       let {total, quantity} =  state.cartItems.reduce((cartTotal, cartItem) =>{
         /*we are destructuring the callback objects */
-        const {store_price, cartQuantity} = cartItem;
-        const itemTotal = store_price * cartQuantity;
+        const {unit_price, cartQuantity} = cartItem;
+        const itemTotal = unit_price * cartQuantity;
         cartTotal.total += itemTotal
         cartTotal.quantity += cartQuantity
  
