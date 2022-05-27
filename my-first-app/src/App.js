@@ -26,6 +26,7 @@ import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {getMe} from "./features/auth/authSlice";
 import Commande from "./components/Commande";
+import FavoriteStores from "./components/FavoriteStores";
 const App = () => {
   /*const dispatch = useDispatch();
   useEffect(() => {
@@ -47,6 +48,8 @@ const App = () => {
               <Route path="/Cart/:id" element={<Cart />}></Route>
               <Route path="/profile-panier" element={<Profilepanier/>}></Route>
               <Route path="/profile-wishlist" element={<Profilewishlist />}></Route>
+              <Route path="/Profile-vendeurs-favoris" element={<FavoriteStores />}></Route>
+
               <Route path="/boutique/:id" element={<Store/>}></Route>
               <Route path="/Wishlist" element={<Wishlist />}></Route>
               <Route path="/Profile" element={<Profileuser />}></Route>

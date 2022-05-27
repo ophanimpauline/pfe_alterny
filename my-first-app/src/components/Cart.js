@@ -12,7 +12,7 @@ import {
 } from "../features/Cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import CartImages from "../components/CartImages";
-import Commande from "./Commande";
+
 
 
 /*we want to check if the cart is empty we show another interface

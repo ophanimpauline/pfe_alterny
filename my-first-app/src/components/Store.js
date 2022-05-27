@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {getStore } from "../features/Store/StoreSlice";
 import Storereview from "./Storereview";
+import {
+
+
+  FiHeart
+
+} from "react-icons/fi";
+import { addToFavstores} from "../features/FavStores/favstoresSlice"
+
 
 export default function Store() {
 
@@ -15,14 +23,22 @@ export default function Store() {
   }, [id, dispatch]);
 
 
+  const handleAddToStoreFavs  = (store) => {
+    dispatch( addToFavstores(store));
+};
+
+
   return (
     <>
-    {store.response ? (
+    {store.storeLoaded ? (
     <div className="store-container">
       <div className="another-store-container">
         <h1 className="store-name">
           {store?.store_name}
         </h1>
+        <div className="store-add-to-favs">
+          <FiHeart onClick={()=> handleAddToStoreFavs(store)}/>
+          </div>
         <div className="store-image-container">
         <img src={store?.StoreImage[0].store_image} alt="image"/>
         </div>

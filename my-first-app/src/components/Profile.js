@@ -51,8 +51,8 @@ const auth = useSelector((state) => state.auth)
               <Link to="/Profile-wishlist">
               <button className="profile-wishlist">Liste de souhaits</button>
               </Link>
-              <Link to="/Profile-vendeurs">
-              <button className="profile-vendeurs">Vendeurs favoris</button>
+              <Link to="/Profile-vendeurs-favoris">
+              <button className="vendeurs-favoris">Vendeurs favoris</button>
               </Link>
               </div>
               <h1 className="title1-profile">Vos informations: </h1>

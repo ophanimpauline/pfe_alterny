@@ -1,7 +1,6 @@
 import React from "react";
 import { useGetAllProductsQuery } from "../features/ProductApi";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../features/Cart/cartSlice";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import {useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel"
@@ -10,10 +9,7 @@ import Carousel from "../components/Carousel"
 const Acceuil = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   const dispatch = useDispatch();
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    
-  };
+
   const navigate = useNavigate();
 
   const handleAddToWishlist = (product) => {

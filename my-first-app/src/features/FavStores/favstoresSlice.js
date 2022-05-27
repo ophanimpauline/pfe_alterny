@@ -3,8 +3,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
   favstoresItems: [],
-  favstoresTotalQuantity: 0,
-  favstoresTotalAmount: 0,
+  status: null,
 };
 
 const favstoresSlice = createSlice({
@@ -22,16 +21,31 @@ const favstoresSlice = createSlice({
           } );
       }else{
         
-      const tempStore = { ...action.payload, cartQuantity: 1 };
+      const tempStore = { ...action.payload, favstoresQuantity: 1 };
       state.favstoresItems.push(tempStore);
       toast.success("boutique ajoutée au favoris", {
         position: "bottom-left",
       } );
       }
     },
+    removeFromFavStores(state, action) {
+      const nextfavstoresItems = state.favstoresItems.filter(
+        /*filter is an array method, returns the items that don't have
+        the id of the item we want removed*/
+        (favstoresItem) => favstoresItem.id !== action.payload.id
+      );
+      /*after receiving the new array without the item id
+      we change the state of the favstoresItems, and we save the new
+      state to the local storage  */
+      state.favstoresItems = nextfavstoresItems;
+      localStorage.setItem("favstoresItems", JSON.stringify(state.favstoresItems));
+      toast.error("produit supprimé du panier", {
+        position: "bottom-left",
+      });
+    },
   },
 });
 
-export const { addToFavstores } = favstoresSlice.actions;
+export const { addToFavstores, removeFromFavStores } = favstoresSlice.actions;
 
 export default favstoresSlice.reducer;
