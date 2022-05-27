@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import {  useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -12,6 +12,7 @@ import {
 } from "../features/Cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import CartImages from "../components/CartImages";
+import Commande from "./Commande";
 
 
 /*we want to check if the cart is empty we show another interface
@@ -22,15 +23,23 @@ const Cart = () => {
   /*we access the state of the cart using the selector hook */
  
   const cart = useSelector((state) => state.cart);
-  const auth = useSelector((state) => state.auth);
+ 
+
+
+
+  const {loginStatus} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   /* this will be called whenever our component renders it's for
   calculating the total and total quantity, and also whenever any chance happens*/
   useEffect(() => {
+  
     dispatch(getTotals());
+
   }, [cart, dispatch]);
 
+
+ 
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart(cartItem));
   };
@@ -43,6 +52,8 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+
   return (
     <div className="cart-container" style={{padding:"100px"}}>
       <h2>Panier</h2>
@@ -75,9 +86,18 @@ const Cart = () => {
             {cart.cartItems?.map((cartItem) => (
               <div className="cart-item" key={cartItem.id}>
                 <div className="cart-product">
-                  <img src={cartItem.images[1].image} alt={cartItem.name} style={{width:"200px", height:"300px"}} />
+                  <img src={cartItem.images[0].image} alt="image 1" style={{width:"200px", height:"300px"}} />
                   <div>
-                    <h3>{cartItem.name}</h3>
+                    <h3>{cartItem.title}</h3>
+                    <div className="colors-spd">
+                              {cartItem.a_prod.map((item)=>(
+                                  <button
+                                  style={{backgroundColor: item?.color}}>
+                                  </button>
+                              ))}
+                                
+                            </div>
+                    <p>taille: {cartItem.a_prod[0].size}</p>
                     <p style={{color:"black"}}>{cartItem.description}</p>
                     <button onClick={() => handleRemoveFromCart(cartItem)}>
                       {" "}
@@ -112,8 +132,12 @@ const Cart = () => {
                 <span>Sous-total</span>
                 <span className="amount">{cart.cartTotalAmount}dt</span>
               </div>
-              {auth.uuid ? (
+              {loginStatus ?  (<> 
+                <Link to="/commande-test"> 
                 <button>COMMANDER</button>
+                </Link>
+                
+                </>
               ) : (
                 <button onClick={() => navigate("/login")}>Se connecter</button>
               )}
@@ -127,7 +151,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
-      )}
+      )} 
     </div>
   );
 };

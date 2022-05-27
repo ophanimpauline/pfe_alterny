@@ -4,7 +4,6 @@ import Acceuil from "./pages/Acceuil";
 import Activation from "./pages/Activation";
 import ResetPassword from "./pages/ResetPassword";
 import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
-import Login from "./pages/Login";
 import Login1 from "./components/Login1";
 import Register from "./components/Register";
 import Layout from "./Hocs/Layout";
@@ -20,19 +19,18 @@ import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profilepanier from "./pages/Profilepanier";
 import Profilewishlist from "./pages/Profilewishlist";
-import Profilestores from "./pages/Profilestores";
+import Store from "./components/Store";
 import SellerRegistration from "./pages/SellerRegistration";
 import StoreRegister from "./components/StoreRegister";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {getMe} from "./features/auth/authSlice";
-
+import Commande from "./components/Commande";
 const App = () => {
-  const dispatch = useDispatch();
+  /*const dispatch = useDispatch();
   useEffect(() => {
-    console.log("kdjshfksdjf")
       dispatch(getMe)
-  }, [dispatch]);
+  }, [dispatch]);*/
 
 
   return (
@@ -43,12 +41,13 @@ const App = () => {
             <Routes>
               <Route path="/" exact element={<Acceuil />} />
               <Route path="/product-detail/:id" element={<ProductDetail/>}/>
+              <Route path ="/commande-test" element={<Commande/>} />
               <Route path="/Filter" element={<Filtertest/>}></Route>
               <Route path="/Cart" element={<Cart />}></Route>
               <Route path="/Cart/:id" element={<Cart />}></Route>
               <Route path="/profile-panier" element={<Profilepanier/>}></Route>
               <Route path="/profile-wishlist" element={<Profilewishlist />}></Route>
-              <Route path="/profile-vendeurs" element={<Profilestores />}></Route>
+              <Route path="/boutique/:id" element={<Store/>}></Route>
               <Route path="/Wishlist" element={<Wishlist />}></Route>
               <Route path="/Profile" element={<Profileuser />}></Route>
               <Route path="/editprofile" element={<ProfileEdit />}></Route>

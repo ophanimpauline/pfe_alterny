@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../api/axios";
 
 const initialState = {
+  response: [],
   user: "",
   store_name: "",
   description: "",
@@ -38,6 +39,7 @@ const storeSlice = createSlice({
       if (action.payload) {
         return {
           ...state,
+          response: action.payload,
           user: action.payload.user,
           store_name: action.payload.store_name,
           description: action.payload.description,

@@ -64,7 +64,6 @@ export const getProfile = createAsyncThunk(
         const response = await axios.get("/store/customers/me", {headers: {'Authorization' : `JWT ${accessToken}` }})
         //localStorage.setItem("profile", response.data)
         if(response.data) {
-          console.log('logged in')
           const auth = useSelector((state) => state.auth);
           auth.loginStatus = 'success'
         }

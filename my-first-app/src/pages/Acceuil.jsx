@@ -40,9 +40,6 @@ const Acceuil = () => {
                    
                     <span className="price">{product.store_price}dt</span>
                   </div>
-                  <button onClick={() => handleAddToCart(product)}>
-                    Ajouter au panier
-                  </button>
                   <button onClick={() => handleAddToWishlist(product)}>
                     favoris
                   </button>

@@ -4,7 +4,7 @@ import Rate from "./Rate";
 //import { sendReview } from "../features/ReviewSlice";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { sendReview } from "../features/ReviewSlice";
+import { sendStoreReview } from "../features/ReviewSlice";
 
 const ProductReview = () => {
   
@@ -14,7 +14,7 @@ const ProductReview = () => {
   const dispatch = useDispatch();
   const REVIEW = useSelector((state) => state.review);
   const handleSendReview = (review) => {
-    dispatch(sendReview(review));
+    dispatch(sendStoreReview(review));
   };
 
   const [rating, setRating] = useState(0);
@@ -30,9 +30,10 @@ const ProductReview = () => {
 
    const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(sendReview(review));
+        dispatch(sendStoreReview(review));
         setIsSubmit(true);
         };
+
 
 
   return (
@@ -60,7 +61,7 @@ const ProductReview = () => {
               className="product-review-input"
               type="text"
               name="review"
-              placeholder="Vous avez acheté ce produit? Donnez nous votre avis !"
+              placeholder="Vous avez acheté de cette boutique? Donnez nous votre avis !"
               required
               style={{ height: "200px", width: "600px" }}
               onChange={(e) => {

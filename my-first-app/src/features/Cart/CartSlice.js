@@ -1,10 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-const DB_URL = "https://6525-197-238-7-226.ngrok.io";
-
-const cart = JSON.parse(localStorage.getItem('cart'));
+import axios from "../api/axios"
+const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null ;
 
 const initialState = {
   /*the global object is the local storage
@@ -12,25 +9,52 @@ const initialState = {
   carItems. first we check if there is anything there, then cartItems receives
   what's in that object in the localstorage, else, it rececives
   an empty array */
-  cart: cart ? cart : null,
   cartItems: localStorage.getItem("cartItems")
     ? JSON.parse(localStorage.getItem("cartItems"))
     : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
   status: null,
+  orderStatus:"",
 };
-/*this request creates a cart in the data base and returns the id of the cart */
-export const cartFetch = createAsyncThunk(
-  "cart/cartFetch",
-  async () => {
-    const response = await axios.post(DB_URL + "/store/carts/add");
-    if (response.data){
-      localStorage.setItem('cart', JSON.stringify(response.data.id))
+
+
+
+
+export const sendOrder = createAsyncThunk(
+  "order/sendOrder",
+  async (cart, {rejectWithValue}) => {
+    let order= [];
+    if (accessToken) {
+      
+      cart.cartItems.map((item) => {
+        order.push({
+          "id": item.a_prod[0].id,
+          "qty": item.cartQuantity,
+          "unit_price": item.unit_price,
+        });
+        console.log(order);
+      });
+      try {
+        const response = await axios.post(
+          "/store/new_order_created/",
+          { 
+
+            
+            'new_order': order,
+            
+         
+        }
+          ,{ headers: { 'Authorization': `JWT ${accessToken}` } },
+        );
+        return rejectWithValue(response?.data);
+      } catch (err) {
+        return err.response.data;
+      }
     }
-    return response.data
   }
-)
+);
+
 
 const cartSlice = createSlice({
   name: "cart",
@@ -126,18 +150,17 @@ const cartSlice = createSlice({
     }
   },
   extraReducers: {
-    [cartFetch.pending]: (state, action) => {
+    [sendOrder.pending]: (state, action) => {
       state.status = "pending";
     },
-    [cartFetch.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.items = action.payload;
+    [sendOrder.fulfilled]: (state, action) => {
+      state.orderStatus = "success";
+      state.order = action.payload;
     },
-    [cartFetch.rejected]: (state, action) => {
-      state.status = "rejected";
-
+    [sendOrder.rejected]: (state, action) => {
+      state.orderStatus = "rejected";
     },
-  }
+  },
 });
 
 export const { addToCart, removeFromCart, decreaseCart, clearCart, getTotals } = cartSlice.actions;

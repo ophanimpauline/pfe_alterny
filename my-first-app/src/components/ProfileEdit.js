@@ -19,8 +19,11 @@ export default function ProfileEdit() {
     street: "",
     city: "",
   });
+  const [submit, setIsSubmit] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmit(true);
     dispatch(updateProfile(profile));
   };
 
@@ -105,6 +108,7 @@ export default function ProfileEdit() {
         >
           ENREGISTRER
         </button>
+        {submit === true ? <p> Vos données ont été mis à jours avec succes !</p> : <p></p> } 
       </form>
     </>
   );

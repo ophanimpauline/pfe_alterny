@@ -4,23 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { CgSmileSad } from "react-icons/cg";
 import {FiUser} from "react-icons/fi";
-import { getProfile } from "../features/profileSlice";
 import "../App.css"
+import { getMe } from "../features/auth/authSlice";
 
 function Profile() {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const profile = useSelector((state) => state.profile)
+const access = localStorage.getItem("access");
+const { loginStatus} = useSelector((state) => state.auth)
+const auth = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if (auth.uuid) {
-      dispatch(getProfile)
+    if (loginStatus === "success") {
+      dispatch(getMe)
     }
-  }, [auth.uuid, dispatch]);
+  }, [loginStatus, dispatch]);
   
   return (
     <>
-      {auth.uuid === "" ? (
+      {loginStatus === "" ? (
         <>
           <div className="cart-empty" style={{padding:"100px"}}>
             <FiUser style={{fontSize:"50px", paddingBottom:"10px"}}/>
@@ -62,39 +63,34 @@ function Profile() {
                   <FiEdit />
                 </Link>
               </span>
-              <div className="profile-email">
-                <span>Email:</span>
-                <br />
-                <span>{auth.email}</span>
-              </div>
               <div className="profile-tel">
                 <span>Numéro de téléphone 1:</span>
                 <br />
-                <span>{profile.phone1}</span>
+                <span>{auth?.phone1}</span>
               </div>
               <div className="profile-tel">
                 <span>Numéro de téléphone 2:</span>
                 <br />
-                <span>{profile.phone2}</span>
+                <span>{auth?.phone2}</span>
               </div>
               <div className="profile-bd">
                 <span>Date de naissance: </span>
                 <br />
-                <span>{profile.birth_date}</span>
+                <span>{auth?.birth_date}</span>
               </div>
               <div className="profile-code-postal">
                 <span>Code postale:</span>
                 <br />
-                <span>{profile.zipcode}</span>
+                <span>{auth?.zipcode}</span>
               </div>
               <div className="profile-rue">
                 <span>Rue:</span>
                 <br />
-                <span>{profile.street}</span>
+                <span>{auth?.street}</span>
               </div>
               <div className="profile-état">
                 <span>Cité:</span>
-                <span>{profile.city}</span>
+                <span>{auth.city}</span>
               </div>
             </div>
           </div>

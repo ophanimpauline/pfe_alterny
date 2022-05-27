@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "./api/axios";
-const DB_URL = "https://6525-197-238-7-226.ngrok.io"
+const DB_URL = "https://8f0a-197-14-11-2.ngrok.io"
 const initialState = {
   items: [],
   images:[],
   reviews:[],
+  store: "",
+  a_prod: [],
   id_for_cart: "",
   status: null,
 };
@@ -13,7 +15,8 @@ const initialState = {
 export const productDetail = createAsyncThunk(
   "singleproduct/productDetail",
   async(id, thunkAPI) => {
-    const response = await axios.get(DB_URL + `/store/products/54`);
+    const response = await axios.get(DB_URL + `/store/products/${id}`);
+    console.log(response.data)
     return response?.data;
   }
 ); 
@@ -57,6 +60,8 @@ const singleproductSlice = createSlice({
       state.items = action.payload;
       state.images = action.payload.images;
     state.reviews = action.payload.reviews;
+    state.store = action.payload.store;
+    state.a_prod = action.payload.a_prod;
     },
     [productDetail.rejected]: (state, action) => {
       state.status = "rejected";

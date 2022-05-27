@@ -17,10 +17,10 @@ const Login1 = () => {
   });
 
   useEffect(() => {
-    if (auth.uuid) {
+    if (auth.loginStatus === "success") {
       navigate("/");
     }
-  }, [auth.uuid, navigate]);
+  }, [auth.loginStatus, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
