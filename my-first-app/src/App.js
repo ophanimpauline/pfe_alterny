@@ -27,6 +27,7 @@ import {useDispatch} from "react-redux";
 import {getMe} from "./features/auth/authSlice";
 import Commande from "./components/Commande";
 import FavoriteStores from "./components/FavoriteStores";
+import MegaMenuData from "./components/MegaMenuData";
 const App = () => {
   /*const dispatch = useDispatch();
   useEffect(() => {
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/profile-panier" element={<Profilepanier/>}></Route>
               <Route path="/profile-wishlist" element={<Profilewishlist />}></Route>
               <Route path="/Profile-vendeurs-favoris" element={<FavoriteStores />}></Route>
+              <Route path="/test-megamenudata" element={<MegaMenuData/>}></Route>
 
               <Route path="/boutique/:id" element={<Store/>}></Route>
               <Route path="/Wishlist" element={<Wishlist />}></Route>

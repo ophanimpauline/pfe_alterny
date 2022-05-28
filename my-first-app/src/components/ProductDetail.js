@@ -6,12 +6,19 @@ import {addToWishlist} from "../features/Wishlist/wishlistSlice";
 import { useParams} from "react-router-dom";
 import ProductReview from "./ProductReview";
 import { useNavigate } from "react-router-dom";
+//import jwtDecode from "jwt-decode";
+
 
 export default function ProductDetail() {
     const dispatch = useDispatch();
     let {id} = useParams();
     const navigate = useNavigate();
-
+   /* const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null;
+    if(accessToken != null){
+     let   nom = jwtDecode(accessToken)
+        console.log("je suis",nom)
+    }
+*/
     useEffect(() => {
         dispatch(productDetail(id));
     }, [id, dispatch]);
@@ -83,6 +90,7 @@ export default function ProductDetail() {
                         <div className="second-reviews-container" key={items.reviews.id}>
                         {items.reviews.map((review)=>(
                             <> 
+                            {}
                             <h1>{review.name}</h1>
                             <span>{review.date}</span>
                             <div>{review.description}</div>

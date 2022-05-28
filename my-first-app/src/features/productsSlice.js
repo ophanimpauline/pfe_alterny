@@ -29,6 +29,14 @@ export const productDetail = createAsyncThunk(
     const response = await axios.get(DB_URL + `/store/products/${id}`);
     return response?.data;
   }
+);
+
+export const productBySubCollection = createAsyncThunk(
+  "products/productBySubCollection",
+  async(values, { rejectWithValue }) => {
+    const response = await axios.get(`/store/subcollections/11`);
+    return rejectWithValue(response.data);
+  }
 )
 
 const productsSlice = createSlice({
@@ -55,6 +63,17 @@ const productsSlice = createSlice({
       state.items = action.payload;
     },
     [productDetail.rejected]: (state, action) => {
+      state.status = "rejected";
+
+    },
+    [productBySubCollection.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [productBySubCollection.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.items = action.payload;
+    },
+    [productBySubCollection.rejected]: (state, action) => {
       state.status = "rejected";
 
     },

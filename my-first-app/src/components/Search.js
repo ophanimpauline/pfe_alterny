@@ -4,6 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import axios from "../features/api/axios";
 import {useDispatch} from "react-redux"
 import { searchFetch } from "../features/searchSlice";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = styled.div`
   width: 100%;
@@ -34,6 +35,11 @@ const SearchSubmit = styled.button`
 
 function Search() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate(`/recherche`)
+  }
 
   const [query, setQuery] = useState("");
   //const [data, setData] = useState([]);
@@ -63,6 +69,7 @@ function Search() {
           <SearchInput
             value={query}
             onChange={onChangeSearch}
+            onKeyDown={e => e.key === 'Enter'}
             placeholder="Cherchez un produit, une catégorie ou une marque"
           />
           <SearchSubmit>

@@ -29,7 +29,6 @@ export const updateProfile = createAsyncThunk(
   "profile/updateProfile",
   async (values, { rejectWithValue }) => {
     try {
-      console.log('user' , user)
       const response = await axios.put(
         `/store/users/update/${user}`,
         {
