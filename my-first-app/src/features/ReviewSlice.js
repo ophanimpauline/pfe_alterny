@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "./api/axios";
+import jwtDecode from "jwt-decode";
 
 
 const accessToken =  localStorage.getItem("access") ? localStorage.getItem("access") : null;
 const current = new Date();
+ 
+
 
 
 const initialState = {
+  user_id: accessToken ? jwtDecode(accessToken).user_id : "",
   id: "",
   date:"",
   note: NaN,
@@ -14,7 +18,7 @@ const initialState = {
   status: null,
 };
 
-
+//send product review PASS IN THE ID OF THE PRODUCT
 export const sendReview = createAsyncThunk(
     "review/sendReview",
     async (review, { rejectWithValue }) => {
@@ -22,6 +26,7 @@ export const sendReview = createAsyncThunk(
         const response = await axios.post(
           `/store/products/${review.id}/reviews/add`,
           {
+            user_id: review.user,
             id: review.id,
             date:`${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`,
             note: review.note,
@@ -41,6 +46,8 @@ export const sendReview = createAsyncThunk(
       }
     }
   );
+
+  //SEND STORE REVIEW PASS IN THE ID OF THE STORE 
 export const sendStoreReview = createAsyncThunk(
     "review/sendStoreReview",
     async (review, { rejectWithValue }) => {
@@ -48,6 +55,7 @@ export const sendStoreReview = createAsyncThunk(
         const response = await axios.post(
           `/store/stores/${review.id}/reviews/add`,
           {
+            user_id: review.user,
             id: review.id,
             date:`${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`,
             note: review.note,
@@ -67,6 +75,7 @@ export const sendStoreReview = createAsyncThunk(
       }
     }
   );
+
 
   export const updateProductReview = createAsyncThunk(
     "review/updateProductReview",
@@ -76,6 +85,7 @@ export const sendStoreReview = createAsyncThunk(
         const response = await axios.put(
           `/store/products/${values.id}/reviews/update/${values.reviewid}`,
           {
+            user_id: values.user,
             id: values.reviewid,
             date:`${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`,
             note:"2",
@@ -96,14 +106,18 @@ export const sendStoreReview = createAsyncThunk(
     }
   );
 
- /* export const updateStoreReview = createAsyncThunk(
+  export const updateStoreReview = createAsyncThunk(
     "review/updateStoreReview",
     async (values, { rejectWithValue }) => {
       try {
         const response = await axios.put(
-          `/store/users/update/${user}`,
+          `/stores/${values.id}/reviews/update/${values.reviewid}`,
           {
-            
+            user_id: values.user,
+            id: values.id,
+            date: `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`,
+            note:"3",
+            description: values.description,
           },
           {headers: {'Authorization' : `JWT ${accessToken}` }}
         );
@@ -118,7 +132,9 @@ export const sendStoreReview = createAsyncThunk(
         }
       }
     }
-  );*/
+  );
+
+
 
   export const productReviewDestroy = createAsyncThunk(
     "review/productReviewDestroy",

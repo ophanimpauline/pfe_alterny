@@ -1,19 +1,38 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { removeFromFavStores } from "../features/FavStores/favstoresSlice";
+import { destroyFavStores } from "../features/FavStores/favstoresSlice";
 
 export default function FavoriteStores() {
   const favstores = useSelector((state) => state.favstores);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const handleRemoveFromFavStores = (favstoresItem) => {
-    dispatch(removeFromFavStores(favstoresItem));
+    dispatch(destroyFavStores(favstoresItem));
   };
+let fav =[];
+favstores.favstoresItems.map((items) => {
+  fav.push({
+    "id": items.id,
+    "store": items.store,
+    "note": items.note,
+  });
+  console.log(fav);
+});
+
+let fav1 = [];
+fav.map((boutique) => {
+  fav1.push({
+    "user": boutique.store.user,
+    "store_name": boutique.store.store_name
+  });
+  console.log(fav1)
+});
+
 
   return (
-    <div className="favstores-container" style={{ padding: "100px" }}>
+    <div className="home-container">
       <h2>Vos boutiques favorites!</h2>
       {favstores.favstoresItems.length === 0 ? (
         <div className="favstores-empty">
@@ -25,21 +44,24 @@ export default function FavoriteStores() {
           </div>
         </div>
       ) : (
-        <div className="favstores-items">
-          {favstores.favstoresItems?.map((favstoresItem) => (
-            <div className="favstores-item" key={favstoresItem.id}>
-              <div className="favstores-product">
+        <div className="products">
+          {fav1.map((boutique) => (
+            <div className="product" key={boutique.user}>
+              <div className="details">
                 <div>
-                  <h3 onClick={() => navigate(`/boutique/${favstoresItem.user}`)}>{favstoresItem.store_name}</h3>
-
-                  <p style={{ color: "black" }}>{favstoresItem.description}</p>
-                  <button
-                    onClick={() => handleRemoveFromFavStores(favstoresItem)}
+                  <h3
+                    onClick={() => navigate(`/boutique/${boutique.user}`)}
                   >
-                    {" "}
-                    Supprimer{" "}
-                  </button>
+                    {boutique.store_name}
+                  </h3>
+                  
                 </div>
+                <button
+                  onClick={() => handleRemoveFromFavStores(boutique)}
+                >
+                  {" "}
+                  Supprimer{" "}
+                </button>
               </div>
             </div>
           ))}

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const DB_URL = "https://8f0a-197-14-11-2.ngrok.io"
+const DB_URL = "https://b629-197-2-168-220.ngrok.io"
 const initialState = {
   items: [],
   

@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Rate from "./Rate";
-//import {useDispatch} from "react-redux"
-//import { sendReview } from "../features/ReviewSlice";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sendReview } from "../features/ReviewSlice";
+import jwtDecode from "jwt-decode";
 
 const ProductReview = () => {
   
   let { id } = useParams();
-  //const current = new Date();
-  
+    const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null;
+  const user_id = accessToken ? jwtDecode(accessToken).user_id : null;
+
   const dispatch = useDispatch();
   const REVIEW = useSelector((state) => state.review);
-  const handleSendReview = (review) => {
-    dispatch(sendReview(review));
-  };
 
   const [rating, setRating] = useState(0);
   //an issue with setting the rate, i made it static so i can test the apis 
   const [review, setReview] = useState({
+    user: user_id ? user_id : null,
     id: id,
     note: 3,
     description: "",

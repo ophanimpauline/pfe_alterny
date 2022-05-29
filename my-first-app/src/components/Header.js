@@ -8,7 +8,7 @@ import {
   FiHeart,
   FiLogOut,
 } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../features/auth/authSlice";
 import Search from "./Search";
 import { productsSearch } from "../features/productsSlice";
@@ -68,6 +68,30 @@ const SearchSubmit = styled.button`
   cursor: pointer;
 `;*/
 
+/* <>
+            <Text>
+            <span>
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                Créer un compte
+              </Link>
+            </span>
+            <br />{" "}
+            <span>
+              {" "}
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "gray" }}
+              >
+                {" "}
+                Connexion{" "}
+              </Link>
+            </span>
+          </Text>
+             </> */
+
 const Right = styled.div`
   display: flex;
   grid-column: 4 / 5;
@@ -107,6 +131,7 @@ const Text = styled.small`
 
 const Headerpfe = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartTotalQuantity } = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
   const product = useSelector((state) => state.product); 
@@ -124,12 +149,13 @@ const Headerpfe = () => {
         </Searchspace>
 
         <Right>
-          <User>
+          {auth.loginStatus ? ( <User>
             <Link to="/Profile"
             style={{ textDecoration: "none", color: "gray" }}>
               <FiUser />
             </Link>
-          </User>
+          </User> ) : <></> }
+         
 
       
           {auth.loginStatus ? (
@@ -148,27 +174,15 @@ const Headerpfe = () => {
             </>
           ) : (
             <>
-            <Text>
+            
             <span>
-              <Link
-                to="/signup"
-                style={{ textDecoration: "none", color: "gray" }}
-              >
-                Créer un compte
-              </Link>
+            <button onClick={() => navigate("/signup")}>S'INSCRIRE</button>
             </span>
             <br />{" "}
             <span>
-              {" "}
-              <Link
-                to="/signup"
-                style={{ textDecoration: "none", color: "gray" }}
-              >
-                {" "}
-                Connexion{" "}
-              </Link>
+            <button style={{backgroundColor:"white", color:"black"}}onClick={() => navigate("/login")}>SE CONNECTER</button>
             </span>
-          </Text>
+        
              </>
           )}
           <Shoppingcart>

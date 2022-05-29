@@ -1,20 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import { useGetAllProductsQuery } from "../features/ProductApi";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addToWishlist } from "../features/Wishlist/wishlistSlice";
 import {useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel"
+import HomeAuth from "../components/HomeAuth";
 
 
 const Acceuil = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
   const dispatch = useDispatch();
+  const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null ;
+
 
   const navigate = useNavigate();
 
   const handleAddToWishlist = (product) => {
     dispatch(addToWishlist(product));
   };
+
 
   return (
     <div className="home-container">
@@ -23,8 +27,10 @@ const Acceuil = () => {
         <p>loading...</p>
       ) : error ? (
         <p>une erreur est survenue</p>
-      ) : (
-        <>
+      ) : accessToken ? (
+        <HomeAuth/>
+         ) : (
+          <>
           <h2>tous les produits</h2>
           <div className="products">
             {data?.results.map((product) => {
@@ -36,9 +42,9 @@ const Acceuil = () => {
                    
                     <span className="price">{product.store_price}dt</span>
                   </div>
-                  <button onClick={() => handleAddToWishlist(product)}>
-                    favoris
-                  </button>
+                     <button onClick={() => handleAddToWishlist(product)}>
+                     favoris
+                   </button> 
                 </div>
               );
             })}

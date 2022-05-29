@@ -22,17 +22,13 @@ import Profilewishlist from "./pages/Profilewishlist";
 import Store from "./components/Store";
 import SellerRegistration from "./pages/SellerRegistration";
 import StoreRegister from "./components/StoreRegister";
-import {useEffect} from "react";
-import {useDispatch} from "react-redux";
-import {getMe} from "./features/auth/authSlice";
+import WishlistAuth from "./components/WishlistAuth";
 import Commande from "./components/Commande";
 import FavoriteStores from "./components/FavoriteStores";
 import MegaMenuData from "./components/MegaMenuData";
+import SearchResult from "./components/SearchResult";
+import Retourner from "./components/Retourner";
 const App = () => {
-  /*const dispatch = useDispatch();
-  useEffect(() => {
-      dispatch(getMe)
-  }, [dispatch]);*/
 
 
   return (
@@ -43,16 +39,19 @@ const App = () => {
             <Routes>
               <Route path="/" exact element={<Acceuil />} />
               <Route path="/product-detail/:id" element={<ProductDetail/>}/>
-              <Route path ="/commande-test" element={<Commande/>} />
+              <Route path ="/commande" element={<Commande/>} />
               <Route path="/Filter" element={<Filtertest/>}></Route>
               <Route path="/Cart" element={<Cart />}></Route>
-              <Route path="/Cart/:id" element={<Cart />}></Route>
+              <Route path="/recherche=:query" element={<SearchResult/>}></Route>
+              
               <Route path="/profile-panier" element={<Profilepanier/>}></Route>
+              <Route path="/demande-de-retour" element={<Retourner/>}></Route>
               <Route path="/profile-wishlist" element={<Profilewishlist />}></Route>
               <Route path="/Profile-vendeurs-favoris" element={<FavoriteStores />}></Route>
               <Route path="/test-megamenudata" element={<MegaMenuData/>}></Route>
 
               <Route path="/boutique/:id" element={<Store/>}></Route>
+              <Route path ="/Wishlist-auth" element={<WishlistAuth/>} ></Route>
               <Route path="/Wishlist" element={<Wishlist />}></Route>
               <Route path="/Profile" element={<Profileuser />}></Route>
               <Route path="/editprofile" element={<ProfileEdit />}></Route>

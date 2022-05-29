@@ -1,23 +1,24 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import axios from '../api/axios'
 import jwtDecode from "jwt-decode";
-import axios from "../api/axios"
-
 
 const accessToken =  localStorage.getItem("access") ? localStorage.getItem("access") : null;
 
 const initialState = {
-  favstoresItems: [],
-  status: null,
+  wishlistItems: [],
+  wishlistTotalQuantity: 0,
+  wishlistTotalAmount: 0,
   user_id: accessToken ? jwtDecode(accessToken).user_id : "",
 };
 
-export const getFavStores = createAsyncThunk(
-  "favstores/getFavStores",
+//get the wishlist as soon as user logs in
+
+export const getWishlist = createAsyncThunk(
+  "wishlistAuth/getWishlist",
   async (values, { rejectWithValue }) => {
     if (accessToken) {
       try {
-        const response = await axios.get("/store/wishstore/items/", {
+        const response = await axios.get("/store/wishprod/items/", {
           headers: { Authorization: `JWT ${accessToken}` },
         });
         return response.data;
@@ -29,13 +30,13 @@ export const getFavStores = createAsyncThunk(
   }
 );
 
-
-export const addFavStores = createAsyncThunk(
-  "favstores/addFavStores",
+// add item to wishlist on click 
+export const wishlistAdd = createAsyncThunk(
+  "wishlistAuth/wishlistAdd",
   async (values, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/store/wishstore/items/add", {
-        store_id: values.sid,
+      const response = await axios.post("/store/wishprod/items/add", {
+        products_id: values.id,
         note: values.note,
       }, {
         headers: { Authorization: `JWT ${accessToken}` },
@@ -46,12 +47,13 @@ export const addFavStores = createAsyncThunk(
     }
   }
 );
+//remove item from wishlist on click in wishlist 
 
-export const destroyFavStores = createAsyncThunk(
-  "favstores/destroyFavStores",
+export const wishlistDestroy = createAsyncThunk(
+  "wishlistAuth/wishlistDestroy",
   async (values, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`/store/wishstore/items/${values.id}/destroy`, {
+      const response = await axios.delete(`/store/wishprod/items/${values.id}/destroy`, {
         headers: { Authorization: `JWT ${accessToken}` }} ,{
         products_id: values.pid,
         note: values.note,
@@ -63,46 +65,46 @@ export const destroyFavStores = createAsyncThunk(
   }
 );
 
-
-const favstoresSlice = createSlice({
-  name: "favstores",
+const wishlistSlice = createSlice({
+  name: "wishlistAuth",
   initialState,
   reducers: {
-  },extraReducers: {
-    [getFavStores.pending]: (state, action) => {
+  },
+  extraReducers: {
+    [getWishlist.pending]: (state, action) => {
       state.status = "pending";
     },
-    [getFavStores.fulfilled]: (state, action) => {
+    [getWishlist.fulfilled]: (state, action) => {
       state.status = "success";
-      let Favstores= [];
-      state.favstoresItems = action.payload;
+      state.wishlistItems = action.payload;
     },
-    [getFavStores.rejected]: (state, action) => {
+    [getWishlist.rejected]: (state, action) => {
       state.status = "rejected";
 
     },
-    [addFavStores.pending]: (state, action) => {
+    [wishlistAdd.pending]: (state, action) => {
       state.status = "pending";
     },
-    [addFavStores.fulfilled]: (state, action) => {
+    [wishlistAdd.fulfilled]: (state, action) => {
       state.status = "success";
-      state.favstoresItems = action.payload;
+      state.wishlistItems = action.payload;
     },
-    [addFavStores.rejected]: (state, action) => {
+    [wishlistAdd.rejected]: (state, action) => {
       state.status = "rejected";
 
     },
-    [destroyFavStores.pending]: (state, action) => {
+    [wishlistDestroy.pending]: (state, action) => {
       state.status = "pending";
     },
-    [destroyFavStores.fulfilled]: (state, action) => {
+    [wishlistDestroy.fulfilled]: (state, action) => {
       state.status = "success";
     },
-    [destroyFavStores.rejected]: (state, action) => {
+    [wishlistDestroy.rejected]: (state, action) => {
       state.status = "rejected";
 
     },
 }});
 
 
-export default favstoresSlice.reducer;
+
+export default wishlistSlice.reducer;

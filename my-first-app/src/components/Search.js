@@ -14,12 +14,13 @@ const SearchBar = styled.div`
   font-size: large;
 `;
 const SearchInput = styled.input`
-  width: 400px;
+  width: 600px;
   height: 2.8rem;
-  background: #f5f5f5;
+  background: #FFFFFF;
+  border-color: #f5f5f5;
   outline: none;
-  border: none;
-  border-radius: 1.625rem;
+  border-radius: 0.75rem;
+  
   padding: 0 3.5rem 0 1.5rem;
   font-size: 0.90rem;
 `;
@@ -37,13 +38,10 @@ function Search() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSearch = () => {
-    navigate(`/recherche`)
-  }
-
+  /*onKeyDown={(e) =>  {e.key === 'Enter' ; handleSearch();}*/
   const [query, setQuery] = useState("");
   //const [data, setData] = useState([]);
- /* useEffect(() => {
+  /* useEffect(() => {
     const searchProducts = async () => {
       
       const response = await axios.get(`/store/products/search/?q=${query}`);
@@ -51,16 +49,19 @@ function Search() {
     };
     searchProducts()
   }, [query]);*/
-  useEffect(() => {
-   
-     dispatch(searchFetch(query))
+  /* useEffect(() => {
     
-  }, [query, dispatch]);
-
+    dispatch(searchFetch(query))
+    
+  }, [query, dispatch]);*/
+  
   const onChangeSearch = (event) => {
     setQuery(event.currentTarget.value);
     
   };
+  const handleSearch = () => {
+    navigate(`/recherche=${query}`)
+  }
 
   return (
     <div>
@@ -69,11 +70,11 @@ function Search() {
           <SearchInput
             value={query}
             onChange={onChangeSearch}
-            onKeyDown={e => e.key === 'Enter'}
+            
             placeholder="Cherchez un produit, une catégorie ou une marque"
           />
           <SearchSubmit>
-            <FiSearch />
+            <FiSearch  onClick={() =>handleSearch()}/>
           </SearchSubmit>
         </SearchBar>
     

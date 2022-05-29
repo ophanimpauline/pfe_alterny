@@ -9,7 +9,7 @@ import {
   FiHeart
 
 } from "react-icons/fi";
-import { addToFavstores} from "../features/FavStores/favstoresSlice"
+import { addFavStores} from "../features/FavStores/favstoresSlice"
 
 
 export default function Store() {
@@ -17,14 +17,21 @@ export default function Store() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const store= useSelector((state) => state.store);
+  const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null;
  
   useEffect(() => {
     dispatch(getStore(id));
   }, [id, dispatch]);
 
+  const [values, setValues] = useState({
+    sid: NaN,
+    note: "1",
+  });
 
-  const handleAddToStoreFavs  = (store) => {
-    dispatch( addToFavstores(store));
+
+
+  const handleAddToStoreFavs  = (values) => {
+    dispatch( addFavStores(values));
 };
 
 
@@ -37,10 +44,19 @@ export default function Store() {
           {store?.store_name}
         </h1>
         <div className="store-add-to-favs">
-          <FiHeart onClick={()=> handleAddToStoreFavs(store)}/>
+          {accessToken ? <button  onClick={() => {
+                setValues({ ...values, sid: store.response.user });
+                handleAddToStoreFavs(values);
+              }}>
+                Ajouter aux favoris 
+              </button> : 
+            <></>
+          
+          }
+      
           </div>
         <div className="store-image-container">
-        <img src={store?.StoreImage[0].store_image} alt="image"/>
+        <img src={store?.StoreImage[0]?.store_image} alt="image"/>
         </div>
         <div className="store-description-container">
           <div className="store-description">

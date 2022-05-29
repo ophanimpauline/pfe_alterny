@@ -4,12 +4,15 @@ import productsReducer, {  productBySubCollection, productsFetch } from '../feat
 import { productsApi } from '../features/ProductApi';
 import categoriesReducer, { categoriesFetch } from '../features/CategoriesSlice';
 import wishlistReducer, {getTotals1 } from '../features/Wishlist/wishlistSlice';
-import favstoresReducer from '../features/FavStores/favstoresSlice';
+import favstoresReducer, { getFavStores } from '../features/FavStores/favstoresSlice';
 import authReducer, {getMe, loadUser} from '../features/auth/authSlice';
 import sliderReducer, { imagesFetch } from '../features/sliderSlice';
 import profileReducer, { getProfile, updateProfile } from '../features/profileSlice';
 import singleproductReducer, { productDetail } from '../features/singleproductSlice';
 import StoreReducer from '../features/Store/StoreSlice';
+import ReviewReducer from '../features/ReviewSlice';
+import wishlistAuthReducer, { getWishlist } from '../features/Wishlist/wishlistAuthSlice';
+import retourReducer from '../features/retourSlice';
 
 
 
@@ -22,6 +25,9 @@ export const store = configureStore({
     cart: cartReducer,
     store: StoreReducer,
     wishlist: wishlistReducer,
+    retour: retourReducer,
+    wishlistAuth: wishlistAuthReducer,
+    review: ReviewReducer,
     favstores: favstoresReducer,
     categories: categoriesReducer,
     products: productsReducer,
@@ -41,7 +47,6 @@ export const store = configureStore({
  store.dispatch(productBySubCollection());
  store.dispatch(imagesFetch());
  store.dispatch(getTotals());
- store.dispatch(getTotals1());
  store.dispatch(loadUser(null)); // it doesn't expect any parameter so it receives null
  store.dispatch(categoriesFetch());
- store.dispatch(getMe());
+

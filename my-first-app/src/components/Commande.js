@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getTotals,
 } from "../features/Cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 export default function Commande({ fermer }) {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleCommande = () => {
     dispatch(sendOrder(cart));
   };
@@ -52,7 +54,9 @@ export default function Commande({ fermer }) {
             </div>
           </div>
           <button onClick={() => handleCommande(cart)}>COMMANDER</button>
+          <button onClick={() => navigate("/Cart")}>MODIFIER MA COMMANDE</button>
         </div>
+
       </div>
     </>
   );

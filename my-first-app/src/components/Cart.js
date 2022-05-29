@@ -133,7 +133,7 @@ const Cart = () => {
                 <span className="amount">{cart.cartTotalAmount}dt</span>
               </div>
               {loginStatus ?  (<> 
-                <Link to="/commande-test"> 
+                <Link to="/commande"> 
                 <button>COMMANDER</button>
                 </Link>
                 
