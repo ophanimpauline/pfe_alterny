@@ -36,61 +36,6 @@ const Searchspace = styled.div`
   align-self: center;
   padding: 4px;
 `;
-/*const Wrapper = styled.div`
-  max-width: 31.25rem;
-  grid-column: 2 / 4;
-  justify-self: center;
-  align-self: center;
-`;
-const SearchBar = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-const SearchInput = styled.input`
-  width: 400px;
-  height: 2.8rem;
-  background: #f5f5f5;
-  outline: none;
-  border: none;
-  border-radius: 1.625rem;
-  padding: 0 3.5rem 0 1.5rem;
-  font-size: 1rem;
-`;
-const SearchSubmit = styled.button`
-  width: 3.5rem;
-  height: 2.8rem;
-  margin-left: -3.5rem;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-`;*/
-
-/* <>
-            <Text>
-            <span>
-              <Link
-                to="/signup"
-                style={{ textDecoration: "none", color: "gray" }}
-              >
-                Créer un compte
-              </Link>
-            </span>
-            <br />{" "}
-            <span>
-              {" "}
-              <Link
-                to="/signup"
-                style={{ textDecoration: "none", color: "gray" }}
-              >
-                {" "}
-                Connexion{" "}
-              </Link>
-            </span>
-          </Text>
-             </> */
 
 const Right = styled.div`
   display: flex;
@@ -124,9 +69,7 @@ const Text = styled.small`
   font-size: 15px;
   cursor: pointer;
   color: #686868;
-  &:hover {
-    text-decoration: underline;
-  }
+
 `;
 
 const Headerpfe = () => {
@@ -138,30 +81,32 @@ const Headerpfe = () => {
   return (
     <>
       <Infobar />
-      <Container>
-        <Logo>
+      <div className="container-header">
+        <h1 className="logo-container">
         <Link to="/" style={{textDecoration:"none", color:"#1db5c0"}}> 
+        <span className="logo"> 
           ALTERNY
+          </span>
           </Link>
-          </Logo>
-        <Searchspace> 
+          </h1>
+        <div className="search-space"> 
         <Search/>
-        </Searchspace>
+        </div>
 
-        <Right>
-          {auth.userLoaded ? ( <User>
+        <div className="right">
+          {auth.userLoaded ? ( <span className="user">
             <Link to="/Profile"
             style={{ textDecoration: "none", color: "gray" }}>
               <FiUser />
             </Link>
-          </User> ) : <></> }
+          </span> ) : <></> }
          
 
       
           {auth.userLoaded ? (
             <>
               {" "}
-              <Text>
+              <small className="text">
                 {" "}
                 <FiLogOut
                 className="logout"
@@ -170,12 +115,12 @@ const Headerpfe = () => {
                   dispatch(logoutUser(null));
 
                 }}/>{" "}
-              </Text>
+              </small>
             </>
           ) : (
             <>
             
-            <span>
+            <span className="user">
             <button onClick={() => navigate("/signup")}>S'INSCRIRE</button>
             </span>
             <br />{" "}
@@ -185,23 +130,23 @@ const Headerpfe = () => {
         
              </>
           )}
-          <Shoppingcart>
+          <span className="shoppingcart">
             <Link to="/Cart"
             style={{ textDecoration: "none", color: "gray"}}>
               <FiShoppingCart />
             </Link>
-          </Shoppingcart>
+          </span>
               <span className="bag-quantity">
                 <span>{cartTotalQuantity}</span>
               </span>
-          <Heart>
+          <span className="heart">
             <Link to="/Wishlist"
             style={{ textDecoration: "none", color: "gray" }}>
               <FiHeart />
             </Link>
-          </Heart>
-        </Right>
-      </Container>
+          </span>
+        </div>
+      </div>
     </>
   );
 };

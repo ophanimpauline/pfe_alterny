@@ -58,19 +58,8 @@ function Filter ()  {
               value={unit_price_lt}
               onChange={(e) => setUnit_price_lt(e.target.value)}
             />
-
-            <div className="filter-size">
-              Taille
-              <select>
-                <option value="">TOUS</option>
-                <option value="XS">XS</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-              </select>
               <button>FILTRER</button>
-            </div>
+           
           </div>
         </div>
       </form>

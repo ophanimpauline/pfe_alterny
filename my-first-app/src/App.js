@@ -25,7 +25,7 @@ import StoreRegister from "./components/StoreRegister";
 import WishlistAuth from "./components/WishlistAuth";
 import Commande from "./components/Commande";
 import Profilestores from "./pages/Profilestores";
-
+import VendeurInfo from "./components/VendeurInfo"
 import SearchResult from "./components/SearchResult";
 import Retourner from "./components/Retourner";
 import Profilecommandes from "./pages/ProfileCommandes";
@@ -43,6 +43,7 @@ const App = () => {
             <Route path="/commande" element={<Commande />} />
             <Route path="/Filter" element={<Filtertest />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
+            <Route path="/vendeur-info" element={<VendeurInfo />}></Route>
             <Route path="/recherche=:query" element={<SearchResult />}></Route>
 
             <Route path="/profile-panier" element={<Profilepanier />}></Route>
