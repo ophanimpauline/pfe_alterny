@@ -13,6 +13,7 @@ import StoreReducer from '../features/Store/StoreSlice';
 import ReviewReducer from '../features/ReviewSlice';
 import wishlistAuthReducer, { getWishlist } from '../features/Wishlist/wishlistAuthSlice';
 import retourReducer from '../features/retourSlice';
+import OrderReducer from '../features/OrderSlice';
 
 
 
@@ -25,6 +26,7 @@ export const store = configureStore({
     cart: cartReducer,
     store: StoreReducer,
     wishlist: wishlistReducer,
+    order: OrderReducer,
     retour: retourReducer,
     wishlistAuth: wishlistAuthReducer,
     review: ReviewReducer,
@@ -44,7 +46,6 @@ export const store = configureStore({
 // this will dispatch our action creater and createasynch thunk
  store.dispatch(productsFetch());
  store.dispatch(getProfile());
- store.dispatch(productBySubCollection());
  store.dispatch(imagesFetch());
  store.dispatch(getTotals());
  store.dispatch(loadUser(null)); // it doesn't expect any parameter so it receives null

@@ -188,6 +188,7 @@ const authSlice = createSlice({
           zipcode: action.payload.zipcode,
           loginStatus: "success",
           profileStatus: "success",
+          userLoaded: "true"
         };
       } else return state;
     });
@@ -234,6 +235,7 @@ const authSlice = createSlice({
           username: user.username,
           email: user.email,
           loginStatus: "success",
+          userLoaded:"true",
         };
       } else return state;
     });
@@ -242,6 +244,7 @@ const authSlice = createSlice({
         ...state,
         loginStatus: "rejected",
         loginError: action.payload,
+        userLoaded:"false",
       };
     });
   },

@@ -1,12 +1,12 @@
 import React from "react";
 import "../App.css";
-import Cart from "../components/Cart";
 import { Link } from "react-router-dom";
+import VoirCommandes from "../components/VoirCommandes";
 
-export default function Profilepanier() {
+export default function Profilecommandes() {
   return (
     <>
-        <div className="buttons-flex">
+      <div className="buttons-flex">
         <Link to="/Profile">
           <button className="profile-profile">Votre profile</button>
         </Link>
@@ -24,7 +24,7 @@ export default function Profilepanier() {
         </Link>
       </div>
 
-      <Cart />
+      <VoirCommandes />
     </>
   );
 }

@@ -68,10 +68,10 @@ export default function ProductDetail() {
               <p className="spd-p">{items.description}</p>
               {images && images.length > 0 ? (
                 <div className="thumb-spd">
-                  <img src={images[0].image} alt="image0" />
-                   <img src={images[1].image} alt="image1"/>
-                                        <img src={images[2].image} alt="image2"/>
-                                        <img src={images[3].image} alt="image3"/> 
+                  <img src={images[0]?.image} alt="image0" />
+                   <img src={images[1]?.image} alt="image1"/>
+                                        <img src={images[2]?.image} alt="image2"/>
+                                        <img src={images[3]?.image} alt="image3"/> 
                 </div>
               ) : (
                 <div></div>

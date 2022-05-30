@@ -10,18 +10,18 @@ import { getMe } from "../features/auth/authSlice";
 function Profile() {
   const dispatch = useDispatch();
 const access = localStorage.getItem("access");
-const { loginStatus} = useSelector((state) => state.auth)
+const { userLoaded } = useSelector((state) => state.auth)
 const auth = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if (loginStatus === "success") {
+    if (userLoaded === "true") {
       dispatch(getMe)
     }
-  }, [loginStatus, dispatch]);
+  }, [userLoaded, dispatch]);
   
   return (
     <>
-      {loginStatus === "" ? (
+      {userLoaded === "" ? (
         <>
           <div className="cart-empty" style={{padding:"100px"}}>
             <FiUser style={{fontSize:"50px", paddingBottom:"10px"}}/>
@@ -42,19 +42,22 @@ const auth = useSelector((state) => state.auth)
           <div className="profile-wrapper">
             <div className="profile-flex-box">
             <div className="buttons-flex">
-              <Link to="/Profile"> 
-            <button className="profile-profile">Votre profile</button>
-            </Link>
-            <Link to="/Profile-panier">
-              <button className="profile-cart">Votre panier</button>
-              </Link>
-              <Link to="/Profile-wishlist">
-              <button className="profile-wishlist">Liste de souhaits</button>
-              </Link>
-              <Link to="/Profile-vendeurs-favoris">
-              <button className="vendeurs-favoris">Vendeurs favoris</button>
-              </Link>
-              </div>
+        <Link to="/Profile">
+          <button className="profile-profile">Votre profile</button>
+        </Link>
+        <Link to="/Profile-panier">
+          <button className="profile-cart">Votre panier</button>
+        </Link>
+        <Link to="/Profile-wishlist">
+          <button className="profile-wishlist">Liste de souhaits</button>
+        </Link>
+        <Link to="/Profile-vendeurs">
+          <button className="profile-vendeurs">Vendeurs favoris</button>
+        </Link>
+        <Link to="/Profile-commandes">
+          <button className="profile-commandes">Mes commandes</button>
+        </Link>
+      </div>
               <h1 className="title1-profile">Vos informations: </h1>
               {/*a modification icon would be here, if you click on it it redirects you to the modification view */}
               <span className= "title2-profile"style={{ cursor: "pointer" }}>

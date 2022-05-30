@@ -5,18 +5,20 @@ import axios from "./api/axios"
 const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null ;
 
 const initialState = {
-  id: "",
+ 
   num_order:"",
   date_order:"",
   slug_produit_retour:"",
   cause:"",
   status: null,
+  reponse: "",
+  error:"",
 };
 export const postRetour = createAsyncThunk(
   "retour/postRetour",
   async (values, {rejectWithValue}) => {
     const response = await axios.post( "/store/demande_retour_produit/", {
-id: values.id,
+
 num_order: values.num_order,
 date_order: values.date_order,
 slug_produit_retour: values.slug_produit_retour,
@@ -41,10 +43,11 @@ const retourSlice = createSlice({
     },
     [postRetour.fulfilled]: (state, action) => {
       state.status = "success";
-      state.items = action.payload;
+      state.reponse = action.payload;
     },
     [postRetour.rejected]: (state, action) => {
       state.status = "rejected";
+      state.error = action.payload;
 
     },
   },

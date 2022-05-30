@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "./api/axios";
 const DB_URL = "https://b629-197-2-168-220.ngrok.io"
 const initialState = {
   items: [],
   
   status: null,
+  error:"",
 };
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",
@@ -23,21 +24,19 @@ export const productsFetch = createAsyncThunk(
 
 );*/
 
-export const productDetail = createAsyncThunk(
-  "products/productDetail",
-  async(id, thunkAPI) => {
-    const response = await axios.get(DB_URL + `/store/products/${id}`);
+
+export const productByCol = createAsyncThunk(
+  "products/productByCol",
+  async(collection_id, thunkAPI) => {
+    try{
+    const response = await axios.get( `/store/products/?${collection_id}=&unit_price_gt=&unit_price_lt=`);
     return response?.data;
+    }catch(err){
+      return err.response.data;
+    }
   }
 );
 
-export const productBySubCollection = createAsyncThunk(
-  "products/productBySubCollection",
-  async(values, { rejectWithValue }) => {
-    const response = await axios.get(`/store/subcollections/11`);
-    return rejectWithValue(response.data);
-  }
-)
 
 const productsSlice = createSlice({
   name: "products",
@@ -55,26 +54,16 @@ const productsSlice = createSlice({
       state.status = "rejected";
 
     },
-    [productDetail.pending]: (state, action) => {
+    [productByCol.pending]: (state, action) => {
       state.status = "pending";
     },
-    [productDetail.fulfilled]: (state, action) => {
+    [productByCol.fulfilled]: (state, action) => {
       state.status = "success";
       state.items = action.payload;
     },
-    [productDetail.rejected]: (state, action) => {
+    [productByCol.rejected]: (state, action) => {
       state.status = "rejected";
-
-    },
-    [productBySubCollection.pending]: (state, action) => {
-      state.status = "pending";
-    },
-    [productBySubCollection.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.items = action.payload;
-    },
-    [productBySubCollection.rejected]: (state, action) => {
-      state.status = "rejected";
+      state.error= action.payload;
 
     },
   },

@@ -149,7 +149,7 @@ const Headerpfe = () => {
         </Searchspace>
 
         <Right>
-          {auth.loginStatus ? ( <User>
+          {auth.userLoaded ? ( <User>
             <Link to="/Profile"
             style={{ textDecoration: "none", color: "gray" }}>
               <FiUser />
@@ -158,7 +158,7 @@ const Headerpfe = () => {
          
 
       
-          {auth.loginStatus ? (
+          {auth.userLoaded ? (
             <>
               {" "}
               <Text>

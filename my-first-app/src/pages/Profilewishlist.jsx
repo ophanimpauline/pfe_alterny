@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Profilewishlist() {
   return (
     <>
-      <div className="buttons-flex">
+        <div className="buttons-flex">
         <Link to="/Profile">
           <button className="profile-profile">Votre profile</button>
         </Link>
@@ -18,6 +18,9 @@ export default function Profilewishlist() {
         </Link>
         <Link to="/Profile-vendeurs">
           <button className="profile-vendeurs">Vendeurs favoris</button>
+        </Link>
+        <Link to="/Profile-commandes">
+          <button className="profile-commandes">Mes commandes</button>
         </Link>
       </div>
 

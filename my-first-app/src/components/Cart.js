@@ -27,7 +27,7 @@ const Cart = () => {
 
 
 
-  const {loginStatus} = useSelector((state) => state.auth);
+  const {userLoaded} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   /* this will be called whenever our component renders it's for
@@ -132,7 +132,7 @@ const Cart = () => {
                 <span>Sous-total</span>
                 <span className="amount">{cart.cartTotalAmount}dt</span>
               </div>
-              {loginStatus ?  (<> 
+              {userLoaded ?  (<> 
                 <Link to="/commande"> 
                 <button>COMMANDER</button>
                 </Link>
