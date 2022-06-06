@@ -53,8 +53,8 @@ export default function Commande({ fermer }) {
               </div>
             </div>
           </div>
-          <button onClick={() => handleCommande(cart)}>COMMANDER</button>
-          <button onClick={() => navigate("/Cart")}>MODIFIER MA COMMANDE</button>
+          <button  style={{margin:"5px"}}onClick={() => handleCommande(cart)}>COMMANDER</button>
+          <button style={{marginLeft:"800px"}} onClick={() => navigate("/Cart")}>MODIFIER MA COMMANDE</button>
         </div>
 
       </div>

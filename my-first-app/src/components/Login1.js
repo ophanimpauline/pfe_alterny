@@ -41,6 +41,7 @@ const Login1 = () => {
           placeholder="mot de passe"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
+        <p style={{color:"gray", cursor:"pointer"}} onClick={() => navigate("/reset-password")}>Mot de passe oublié?</p>
         {auth.loginStatus === "rejected" ? <p>Vérifiez votre email ou mot de passe ! </p> : null}
         <button style={{backgroundColor:"black", color:"white", border:"none", marginTop:"10px", marginBottom:"30px" ,padding:"20px 40px"}}>
           {auth.loginStatus === "pending" ? "Chargement..." : "SE CONNECTER"}

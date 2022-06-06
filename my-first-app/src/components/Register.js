@@ -109,10 +109,10 @@ function Register() {
   //not letting a logged in person access the registration route
 
   useEffect(() => {
-    if (auth.uuid) {
+    if (isSubmit==="true") {
       navigate("/");
     }
-  }, [auth.uuid, navigate]);
+  }, [isSubmit, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -158,7 +158,7 @@ function Register() {
   return (
     <>
       <Container>
-        <WrapperG>
+      <WrapperG>
           <Title>CRÉER VOTRE COMPTE</Title>
           <STitle>S'inscrire avec Facebook:</STitle>
 
@@ -173,7 +173,6 @@ function Register() {
           </DP>
         </WrapperG>
         <hr style={{ size: "5px" }}></hr>
-
         <form  onSubmit={handleSubmit}>
           <div style={{padding:"30px"}} className="ui form">
             <h1>S'inscrire avec votre e-mail: </h1>
@@ -233,8 +232,11 @@ function Register() {
             />
 
             <p>{formErrors.re_password}</p>
+             
+          <button className="button-registration">S'INSCRIRE</button>
 
-            <button className="button-registration">S'INSCRIRE</button>
+            
+        
           </div>
         </form>
       </Container>

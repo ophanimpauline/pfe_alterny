@@ -14,6 +14,8 @@ import ReviewReducer from '../features/ReviewSlice';
 import wishlistAuthReducer, { getWishlist } from '../features/Wishlist/wishlistAuthSlice';
 import retourReducer from '../features/retourSlice';
 import OrderReducer from '../features/OrderSlice';
+import searchReducer from '../features/searchSlice';
+
 
 
 
@@ -26,6 +28,7 @@ export const store = configureStore({
     cart: cartReducer,
     store: StoreReducer,
     wishlist: wishlistReducer,
+    search: searchReducer,
     order: OrderReducer,
     retour: retourReducer,
     wishlistAuth: wishlistAuthReducer,

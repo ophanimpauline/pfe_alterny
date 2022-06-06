@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import "./Registration.css";
 import styled, { css } from "styled-components";
-//import axios from '../features/api/axios';
+
 import AnimatedShapes from "./AnimatedShapes";
 import {ImFacebook2} from "react-icons/im"
 import { Link, useNavigate} from 'react-router-dom';
@@ -68,30 +68,7 @@ function SellerRegister() {
 
   const navigate = useNavigate();
   const seller = useSelector((state) => state.seller);
-  /*const handleSubmit = async (e) => {
-    e.preventDefault();
-    //need to put these in the then thingy
-    formValues.username=formValues.email;
-    formValues.type="2";
-    setFormErrors(validate(formValues));
-    try{
-      const response= await axios.post(REGISTER_URL,
-        formValues,
-        {
-          headers: {  'Content-Type': 'application/json'},
-          withCredentials: true }
-        );
-        console.log(response.data);
-        console.log(response.accessToken);
-        setIsSubmit(true);
-        //clear input fields 
-    }catch (formErrors){
-      if(!formErrors?.response) {
-        setFormErrors('No Server Response');
-      } else if (formErrors.response?.status === 400) {
-        setFormErrors('Cet email est déjà utilisé!')
-      }
-    }}*/
+
   
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -136,20 +113,7 @@ function SellerRegister() {
   return (
     <>
    <Container>
-   {/*<WrapperG>
-            <Title>CRÉER VOTRE COMPTE</Title>
-            <STitle>S'inscrire avec Facebook:</STitle>
 
-            <button className="button-registration">
-              <ImFacebook2 style={{ color: "#4267B2" }} />
-              S'inscrire avec Facebook
-            </button>
-            <DP>
-              C'est facile, rapide et vous n'avez pas besoin de mémoriser un mot
-              de passe. Nous ne partagerons pas vos données et ne publierons
-              rien en votre nom.
-            </DP>
-  </WrapperG>*/}
         <div className="container">
        
         <IntoShape/>

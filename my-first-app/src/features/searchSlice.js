@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "./api/axios";
-const DB_URL = "https://b629-197-2-168-220.ngrok.io"
+const DB_URL = "https://1dd8-102-158-81-86.ngrok.io"
 const initialState = {
   items: [],
   status: null,
@@ -10,12 +10,23 @@ const initialState = {
 export const searchFetch = createAsyncThunk(
   "search/resultsFetch",
   async (query, { rejectWithValue }) => {
-    const response = await axios.get(DB_URL + `/store/products/search/?q=${query}`
-  );
-    return rejectWithValue(response?.data);
-  }
+    try {
+      const response = await axios.get(DB_URL + `/store/products/search/?q=${query}`);
+      return response.data;
+    } catch (err) {
+return rejectWithValue(err.response.data);
+      }
+    } 
 );
 
+/*async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(DB_URL + `/store/products/search/?q=${query}`);
+      return response.data;
+    } catch (err) {
+return rejectWithValue(err.response.data);
+      }
+    } */
 const searchSlice = createSlice({
   name: "search",
   initialState,

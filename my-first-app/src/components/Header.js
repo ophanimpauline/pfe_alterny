@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../features/auth/authSlice";
 import Search from "./Search";
 import { productsSearch } from "../features/productsSlice";
+import NavBar2 from "./NavBar2";
 
 const Container = styled.div`
   height: 85px;
@@ -43,12 +44,12 @@ const Right = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-  flex-direction: row;
+  //flex-direction: row;
 `;
 
 const User = styled.span`
   color: #686868;
-  font-size: 25px;
+  font-size: 15px;
   cursor: pointer;
   margin-right: 5px;
 `;
@@ -81,23 +82,23 @@ const Headerpfe = () => {
   return (
     <>
       <Infobar />
-      <div className="container-header">
-        <h1 className="logo-container">
+      <Container>
+        <Logo>
         <Link to="/" style={{textDecoration:"none", color:"#1db5c0"}}> 
-        <span className="logo"> 
+        
           ALTERNY
-          </span>
+          
           </Link>
-          </h1>
-        <div className="search-space"> 
+          </Logo>
+        <Searchspace> 
         <Search/>
-        </div>
+        </Searchspace>
 
-        <div className="right">
+        <Right>
           {auth.userLoaded ? ( <span className="user">
             <Link to="/Profile"
             style={{ textDecoration: "none", color: "gray" }}>
-              <FiUser />
+              <FiUser style={{fontSize:"25px"}}/>
             </Link>
           </span> ) : <></> }
          
@@ -106,47 +107,50 @@ const Headerpfe = () => {
           {auth.userLoaded ? (
             <>
               {" "}
-              <small className="text">
+              <Text>
                 {" "}
                 <FiLogOut
-                className="logout"
-                style={{height:"20px"}}
+              
+                style={{fontSize:"25px"}}
                  onClick={() => {
                   dispatch(logoutUser(null));
 
                 }}/>{" "}
-              </small>
+              </Text>
             </>
           ) : (
             <>
             
-            <span className="user">
-            <button onClick={() => navigate("/signup")}>S'INSCRIRE</button>
-            </span>
+            <User 
+            
+            onClick={() => navigate("/signup")}>
+            S'INSCRIRE
+            </User>
             <br />{" "}
-            <span>
-            <button style={{backgroundColor:"white", color:"black"}}onClick={() => navigate("/login")}>SE CONNECTER</button>
-            </span>
+            <User  onClick={() => navigate("/login")}>
+            SE CONNECTER
+            </User >
         
              </>
           )}
-          <span className="shoppingcart">
+          <Shoppingcart>
             <Link to="/Cart"
             style={{ textDecoration: "none", color: "gray"}}>
               <FiShoppingCart />
             </Link>
-          </span>
+          </Shoppingcart>
               <span className="bag-quantity">
                 <span>{cartTotalQuantity}</span>
               </span>
-          <span className="heart">
+          <Heart>
             <Link to="/Wishlist"
             style={{ textDecoration: "none", color: "gray" }}>
               <FiHeart />
             </Link>
-          </span>
-        </div>
-      </div>
+          </Heart>
+        </Right>
+      </Container>
+      <NavBar2/>
     </>
   );
 };

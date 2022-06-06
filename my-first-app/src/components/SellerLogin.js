@@ -1,13 +1,58 @@
 import React from "react";
 import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
 import "./Login.css";
-import axios from "../api/axios";
-//this url matches the url of the database
-const LOGIN_URL = "/auth/jwt/create/";
+import styled, { css } from "styled-components";
+import {ImFacebook2} from "react-icons/im";
+
+import AnimatedShapes from "./AnimatedShapes";
+
+const Container = styled.div`
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+`;
+
+const Shape = css`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+`;
+
+const IntoShape = styled.div`
+  ${Shape}
+  clip-path: polygon(67% 0, 100% 0%, 100% 100%, 55% 100%);
+  background-color: #FFB6C1;
+`;
+const COntainer = styled.div`
+  font-family: "lato";
+`;
+
+const WrapperG = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const Title = styled.div`
+  font-size: 30px;
+  margin: 25px;
+`;
+const STitle = styled.div`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
+
+const DP = styled.p`
+  font-size: 14px;
+  color: black;`
+
+
+
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+
   //user ref to set the focus on the user input when the component loads
   const userRef = useRef();
   // error ref to set the focus on the error + screen reader for assistive technology
@@ -32,43 +77,22 @@ const Login = () => {
   {
     /*the event gets passed the event automatically*/
   }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-        const response = await axios.post(LOGIN_URL, {email, password}, {
-            headers: { 'Content-Type': 'application/json'},
-            withCredentials: true
-        }
-        );
-      console.log(response?.data);
-      //const accessToken = response?.data?.accessToken;
-      //setAuth({email, password, accessToken})
-      setEmail('');
-      setPassword('');
-      setSuccess(true);
-    } catch (err) {
-        if (!err?.response) {
-            setErrMsg('No server Response');
-        }else if (err.response?.status === 400) {
-            setErrMsg('Email ou mot de passe manquant');
-        }else if (err.response?.status === 401) {
-            setErrMsg('Les informations ne correspondent à aucun compte!');
-        }else {
-            setErrMsg('Login échoué');
-        }
-        errRef.current.focus();
-
-    }
     
     {
       /*we can clear out the components once the form is submitted, we can do it bcs they're controlled components */
     }
     
-  };
+ 
 
   return (
     <>
+     <Container>
+
+<div className="container">
+
+<IntoShape/>
+<AnimatedShapes/> 
       {success ? (
         <section>
           <h1>Bienvenue!</h1>
@@ -88,15 +112,16 @@ const Login = () => {
             {errMsg}
           </p>
           <h1>SE CONNECTER</h1>
-          <form onSubmit={handleSubmit}>
+          <form >
             <div className="ui divider"></div>
             <div className="ui form">
               <div className="field">
-                <label> Email: </label>
+                
                 <input
+                style={{width:"400px"}}
                   type="text"
                   id="email"
-                  placeholder=""
+                  placeholder="Email:"
                   ref={userRef}
                   autoComplete="off"
                   onChange={(e) => setEmail(e.target.value)}
@@ -105,33 +130,33 @@ const Login = () => {
                 />
               </div>
               <div className="field">
-                <label>Mot de passe: </label>
+                
                 <input
+                style={{width:"400px"}}
                   type="password"
                   id="password"
-                  placeholder=""
+                  placeholder="Mot de passe"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   required
                 />
               </div>
-              {/*<input type="checkbox" id="stayon" name="stayon" value="stayon" />*/}
-              <label for="stayon"> Rester connecté </label>
-              <span style={{ textDecoration: "underline", fontSize: "13px" }}>
-                MOT DE PASSE OUBLIÉ ?
-              </span>
-              {/*<span className="stylingofthespan">
-put the router link in the #
-<a href="#">Mot de passe oublié?</a>
-</span>*/}
-
+              <p>Vérifiez votre email ou mot de passe ! </p>
+      
               <br />
               {/*we have one button only so we don't have to set a state, the submitting happens from this button automatically*/}
-              <button>SE CONNECTER</button>
+              <button style={{marginBottom:"10px"}}>SE CONNECTER</button>
+              <button style={{marginBottom:"40px"}}>
+              <ImFacebook2 style={{ color: "#4267B2", marginTop:"5px",marginRight:"4px" }} />
+              Connecter avec Facebook
+            </button>
+            
             </div>
           </form>
         </section>
       )}
+      </div>
+      </Container>
     </>
   );
 };

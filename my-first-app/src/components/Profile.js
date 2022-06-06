@@ -41,7 +41,7 @@ const auth = useSelector((state) => state.auth)
         
           <div className="profile-wrapper">
             <div className="profile-flex-box">
-            <div className="buttons-flex">
+            <div className="buttons-flex" style={{marginBottom:"10px"}}>
         <Link to="/Profile">
           <button className="profile-profile">Votre profile</button>
         </Link>

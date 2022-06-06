@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "./api/axios";
-const DB_URL = "https://b629-197-2-168-220.ngrok.io"
+const DB_URL = "https://1dd8-102-158-81-86.ngrok.io"
 const initialState = {
   items: [],
-  
   status: null,
   error:"",
 };
@@ -24,12 +23,26 @@ export const productsFetch = createAsyncThunk(
 
 );*/
 
+export const getFiltered = createAsyncThunk(
+  "products/getFiltered",
+  async (values, thunkAPI) => {
+    
+      try {
+        const response = await axios.get(`/store/products/?collection_id=${values.collection_id}&unit_price__gt=${values.unit_price_gt}&unit_price__lt=${values.unit_price_lt}`)
+        return response.data;
+      } catch (err) {
+        return err.response.data;
+      }
+
+  }
+);
+
 
 export const productByCol = createAsyncThunk(
   "products/productByCol",
   async(collection_id, thunkAPI) => {
     try{
-    const response = await axios.get( `/store/products/?${collection_id}=&unit_price_gt=&unit_price_lt=`);
+    const response = await axios.get( `/store/products/?collection_id=${collection_id}&unit_price_gt=&unit_price_lt=`);
     return response?.data;
     }catch(err){
       return err.response.data;
@@ -66,6 +79,19 @@ const productsSlice = createSlice({
       state.error= action.payload;
 
     },
+    [getFiltered.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [getFiltered.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.items = action.payload;
+    },
+    [getFiltered.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.error= action.payload;
+
+    },
+    
   },
 });
 

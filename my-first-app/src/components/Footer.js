@@ -207,6 +207,7 @@ const menu = [
       { title: "Méthodes de paiement", url: "www.openfit.com" },
       { title: "Suivre ma commande", url: "www.openfit.com" },
     ],
+    id:0
   },
   {
     name: "QUI SOMMES-NOUS?",
@@ -218,7 +219,9 @@ const menu = [
         url: "www.openfit.com",
       },
       { title: "Conditions d'utilisation", url: "www.openfit.com" },
+     
     ],
+    id:1
   },
   {
     name: "GAGNEZ DE L'ARGENT!",
@@ -226,6 +229,7 @@ const menu = [
       { title: "Vendez sur Alterny", url: "www.openfit.com" },
       { title: "Devenez partenaire d'Alterny ", url: "www.openfit.com" },
     ],
+    id:2
   },
 ];
 
@@ -264,11 +268,11 @@ export default function Footer2() {
       </TopBar>
       <HR />
       <BottomBar>
-        {menu.map(({ name, links }) => (
+        {menu.map(({ name, links,id }) => (
           <Menu>
-            <MenuHead key={menu.name}>{name}</MenuHead>
+            <MenuHead key={menu.id}>{name}</MenuHead>
             {links.map(({ title, url }) => (
-              <MenuLink key= { links.title}href={url}>{title}</MenuLink>
+              <MenuLink key= { links.title} href={url}>{title}</MenuLink>
             ))}
           </Menu>
         ))}

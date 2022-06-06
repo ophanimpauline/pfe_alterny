@@ -79,8 +79,6 @@ const Cart = () => {
           <div className="titles">
             <h3 className="product-title">Produit</h3>
             <h3 className="price">Prix</h3>
-            <h3 className="quantity">Quantité</h3>
-            <h3 className="total">Total</h3>
           </div>
           <div className="cart-items">
             {cart.cartItems?.map((cartItem) => (

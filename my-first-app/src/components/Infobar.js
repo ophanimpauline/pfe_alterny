@@ -8,8 +8,8 @@ export default function Infobar() {
 
   return (
     <div className="container-infobar">
- 
-      <span className="link-1">Achetez maintenant payez plus tard</span>
+      
+      <span className="link-1"onClick={() => navigate("/seller-register")}>Devenir vendeur !</span>
       <span className="link-2" onClick={() => navigate("/vendeur-info")}>| Comment vendre sur notre site</span>
     </div>
   );

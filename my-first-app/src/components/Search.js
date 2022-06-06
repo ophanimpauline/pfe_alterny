@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
-import axios from "../features/api/axios";
-import {useDispatch} from "react-redux"
-import { searchFetch } from "../features/searchSlice";
 import { useNavigate } from "react-router-dom";
 
 
 function Search() {
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   /*onKeyDown={(e) =>  {e.key === 'Enter' ; handleSearch();}*/
@@ -34,7 +31,7 @@ function Search() {
             placeholder="Cherchez un produit, une catégorie ou une marque"
           />
           <div className="searchSubmit">
-            <FiSearch style={{paddingTop:"4px", fontSize:"35px", color:"#686868"}} onClick={() =>handleSearch()}/>
+            <FiSearch style={{paddingTop:"4px", fontSize:"29px", color:"#686868"}} onClick={() =>handleSearch()}/>
           </div>
         </div>
     

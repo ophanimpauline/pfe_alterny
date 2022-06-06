@@ -32,17 +32,19 @@ const Acceuil = () => {
          ) : (
           <>
           <h2>tous les produits</h2>
+          
           <div className="products">
             {data?.results.map((product) => {
               return (
                 <div key={product.id} className="product">
                   <h3 onClick={() => navigate(`/product-detail/${product.id}`)} >  {product.title}</h3>
-                  <img  onClick={() => navigate(`/product-detail/${product.id}`)}src={product.image} alt={product.title} />
+                  <img onClick={() => navigate(`/product-detail/${product.id}`)}src={product.images[0]?.image} alt={product.title} />
                   <div className="details">
                    
                     <span className="price">{product.store_price}dt</span>
                   </div>
                      <button onClick={() => handleAddToWishlist(product)}>
+                       
                      favoris
                    </button> 
                 </div>

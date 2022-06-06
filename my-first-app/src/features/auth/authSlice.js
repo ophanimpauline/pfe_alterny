@@ -36,6 +36,11 @@ const initialState = {
   profileStatus: "",
   profileError: "",
   userLoaded: false,
+  password_reset_fail: "",
+  password_reset_success: "",
+  password_reset_confirm_fail: "",
+  password_reset_confirm_success: "",
+  passwordStatus: "",
 };
 /*remarque: we will be getting the username and password
 as payload from our token */
@@ -95,6 +100,57 @@ export const getMe = createAsyncThunk(
       }
     }
     return rejectWithValue("not logged in");
+  }
+);
+
+//need to check the url with anaghim
+export const reset_password = createAsyncThunk(
+  "auth/reset_password",
+  async (email, {rejectWithValue}) => {
+    if (accessToken) {
+      try {
+        const response = await axios.post(
+          "/auth/users/reset_password/",
+          { email: email },
+          {
+            headers: {
+              Authorization: `JWT ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return response.data;
+      } catch (err) {
+        return err.response.data;
+      }
+    }
+    return rejectWithValue("vérifiez votre email");
+  }
+);
+
+export const reset_password_confirm = createAsyncThunk(
+  "auth/reset_password_confirm",
+  async (values, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "/auth/users/reset_password_confirm/",
+        {
+          user_id: values.user_id,
+          token: values.token,
+          new_password: values.new_password,
+          re_new_password: values.re_new_password,
+        },
+        {
+          headers: {
+            Authorization: `JWT ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   }
 );
 
@@ -188,7 +244,7 @@ const authSlice = createSlice({
           zipcode: action.payload.zipcode,
           loginStatus: "success",
           profileStatus: "success",
-          userLoaded: "true"
+          userLoaded: "true",
         };
       } else return state;
     });
@@ -199,6 +255,42 @@ const authSlice = createSlice({
         profileError: action.payload,
       };
     });
+    builder.addCase(reset_password.pending, (state, action) => {
+      return { ...state };
+    });
+    builder.addCase(reset_password.fulfilled, (state, action) => {
+      if (action.payload) {
+        return {
+          ...state,
+          password_reset_success: "true",
+        };
+      } else return state;
+    });
+    builder.addCase(reset_password.rejected, (state, action) => {
+      return {
+        ...state,
+        password_reset_fail: "true",
+      };
+    });
+    builder.addCase(reset_password_confirm.pending, (state, action) => {
+      return { ...state, passwordStatus: "pending" };
+    });
+    builder.addCase(reset_password_confirm.fulfilled, (state, action) => {
+      if (action.payload) {
+        return {
+          ...state,
+          password_reset_confirm_success: "true",
+          passwordStatus:"fullfilled",
+        };
+      } else return state;
+    });
+    builder.addCase(reset_password_confirm.rejected, (state, action) => {
+      return {
+        ...state,
+        password_reset_confirm_fail: "true",
+        passwordStatus:"rejected",
+      };
+    });
     builder.addCase(registerUser.pending, (state, action) => {
       return { ...state, resgisterStatus: "pending" };
     });
@@ -207,11 +299,12 @@ const authSlice = createSlice({
         return {
           ...state,
           user: action.payload,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          username: user.username,
-          email: user.email,
+          first_name: action.payload.first_name,
+          last_name: action.payload.last_name,
+          username: action.payload.username,
+          email: action.payload.email,
           registerStatus: "success",
+          userLoaded: "false",
         };
       } else return state;
     });
@@ -235,7 +328,7 @@ const authSlice = createSlice({
           username: user.username,
           email: user.email,
           loginStatus: "success",
-          userLoaded:"true",
+          userLoaded: "true",
         };
       } else return state;
     });
@@ -244,7 +337,7 @@ const authSlice = createSlice({
         ...state,
         loginStatus: "rejected",
         loginError: action.payload,
-        userLoaded:"false",
+        userLoaded: "false",
       };
     });
   },

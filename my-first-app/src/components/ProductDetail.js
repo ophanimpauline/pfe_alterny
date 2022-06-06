@@ -57,7 +57,7 @@ export default function ProductDetail() {
               </div>
               <div className="colors-spd">
                 {a_prod.map((item) => (
-                  <button style={{ backgroundColor: item?.color }}></button>
+                  <button style={{ backgroundColor: item?.color}}></button>
                 ))}
               </div>
               <div className="colors-spd">

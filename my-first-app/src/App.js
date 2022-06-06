@@ -2,8 +2,8 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Acceuil from "./pages/Acceuil";
 import Activation from "./pages/Activation";
-import ResetPassword from "./pages/ResetPassword";
 import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
+import Changermdp from "./pages/Changermdp";
 import Login1 from "./components/Login1";
 import Register from "./components/Register";
 import Layout from "./Hocs/Layout";
@@ -21,6 +21,7 @@ import Profilepanier from "./pages/Profilepanier";
 import Profilewishlist from "./pages/Profilewishlist";
 import Store from "./components/Store";
 import SellerRegistration from "./pages/SellerRegistration";
+import SellerLogin from "./components/SellerLogin"
 import StoreRegister from "./components/StoreRegister";
 import WishlistAuth from "./components/WishlistAuth";
 import Commande from "./components/Commande";
@@ -45,7 +46,9 @@ const App = () => {
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/vendeur-info" element={<VendeurInfo />}></Route>
             <Route path="/recherche=:query" element={<SearchResult />}></Route>
-
+            <Route path="/reset-password-confirm" element={<ResetPasswordConfirm />}></Route>
+            <Route path="/reset-password" element={<Changermdp />}></Route>
+           
             <Route path="/profile-panier" element={<Profilepanier />}></Route>
             <Route path="/demande-de-retour" element={<Retourner />}></Route>
             <Route
@@ -77,13 +80,13 @@ const App = () => {
             <Route path="/editprofile" element={<ProfileEdit />}></Route>
             <Route path="/login" element={<Login1 />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/password/reset/confirm/:uid/:token"
               element={<ResetPasswordConfirm />}
             />
             <Route path="/store-register" element={<StoreRegister />} />
             <Route path="/seller-register" element={<SellerRegistration />} />
+            <Route path="/seller-login" element={<SellerLogin />} />
             <Route path="/activate/:uid/:token" element={<Activation />} />
             <Route path="*" element={<NotFound />}></Route>
             <Route to="/not-found" />
