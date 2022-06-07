@@ -13,6 +13,7 @@ export default function VoirCommandes() {
     useEffect(() => {
         dispatch(getOrders());
     }, [dispatch])
+    
 
     let o1= [];
     let o2= [];
@@ -63,7 +64,7 @@ export default function VoirCommandes() {
           ) : commandes.status === "success" ?  (
           <>
           
-         <div className="cart-container" style={{padding:"100px"}}>
+         <div className="cart-container" style={{padding:"100px", marginBottom:"100px"}}>
        <h2>Vos commandes</h2>
         <div className="cart-empty">
           <p>Vous n'avez aucune commande! </p>

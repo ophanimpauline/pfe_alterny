@@ -130,15 +130,15 @@ export const reset_password = createAsyncThunk(
 
 export const reset_password_confirm = createAsyncThunk(
   "auth/reset_password_confirm",
-  async (values, { rejectWithValue }) => {
+  async (uid, token, new_password, re_new_password, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "/auth/users/reset_password_confirm/",
         {
-          user_id: values.user_id,
-          token: values.token,
-          new_password: values.new_password,
-          re_new_password: values.re_new_password,
+          uid: uid,
+          token: token,
+          new_password: new_password,
+          re_new_password: re_new_password,
         },
         {
           headers: {

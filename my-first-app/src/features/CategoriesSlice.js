@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-const DB_URL = "https://1dd8-102-158-81-86.ngrok.io";
+import axios from "./api/axios";
+//const DB_URL = "https://adc6-102-157-29-52.ngrok.io";
 const initialState = {
   items: [],
   status: null,
@@ -8,7 +8,7 @@ const initialState = {
 export const categoriesFetch = createAsyncThunk(
   "categories/categoriesFetch",
   async () => {
-    const response = await axios.get(DB_URL + "/store/collections/");
+    const response = await axios.get("/store/collections/");
     return response?.data;
   }
 );

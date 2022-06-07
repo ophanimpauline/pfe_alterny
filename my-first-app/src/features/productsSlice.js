@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "./api/axios";
-const DB_URL = "https://1dd8-102-158-81-86.ngrok.io"
+const DB_URL = "https://6ea4-102-157-29-52.ngrok.io"
 const initialState = {
   items: [],
   status: null,
@@ -49,6 +49,35 @@ export const productByCol = createAsyncThunk(
     }
   }
 );
+export const productBySubCol = createAsyncThunk(
+  "products/productBySubCol",
+  async(sid, thunkAPI) => {
+    try{
+    const response = await axios.get( `store/subcollections/${sid}`);
+    return response?.data;
+    }catch(err){
+      return err.response.data;
+    }
+  }
+);
+
+export const getFilteredSub = createAsyncThunk(
+  "products/getFilteredSub",
+  async (values, thunkAPI) => {
+    
+      try {
+        const response = await axios.get(`/store/subcollections/${values.sid}?collection_id=${values.id}&unit_price__gt=${values.unit_price_gt}&unit_price__lt=${values.unit_price_lt}`)
+        return response.data;
+      } catch (err) {
+        return err.response.data;
+      }
+
+  }
+);
+
+
+
+
 
 
 const productsSlice = createSlice({
@@ -87,6 +116,30 @@ const productsSlice = createSlice({
       state.items = action.payload;
     },
     [getFiltered.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.error= action.payload;
+
+    },
+    [productBySubCol.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [productBySubCol.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.items = action.payload;
+    },
+    [productBySubCol.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.error= action.payload;
+
+    },
+    [getFilteredSub.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [getFilteredSub.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.items = action.payload;
+    },
+    [getFilteredSub.rejected]: (state, action) => {
       state.status = "rejected";
       state.error= action.payload;
 

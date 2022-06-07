@@ -3,7 +3,7 @@ import {  useNavigate } from 'react-router-dom';
 //import { connect } from 'react-redux';
 import { reset_password } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
-const ResetPassword = ({ reset_password }) => {
+const ResetPassword = () => {
     const [requestSent, setRequestSent] = useState(false);
     const [formData, setFormData] = useState({
         email: ''
@@ -47,4 +47,3 @@ const ResetPassword = ({ reset_password }) => {
     );
 };
 export default ResetPassword;
-//export default connect(null, { reset_password })(ResetPassword);

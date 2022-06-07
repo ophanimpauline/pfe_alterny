@@ -32,7 +32,8 @@ fav.map((boutique) => {
 
 
   return (
-    <div className="home-container">
+    <div className="home-container" style={{marginTop:"100px", marginBottom:"100px"}}>
+      <div className="flex-stores" style={{display:"flex", flexDirection:"column", alignItems:"center"}}> 
       <h2>Vos boutiques favorites!</h2>
       {favstores.favstoresItems.length === 0 ? (
         <div className="favstores-empty">
@@ -67,6 +68,7 @@ fav.map((boutique) => {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

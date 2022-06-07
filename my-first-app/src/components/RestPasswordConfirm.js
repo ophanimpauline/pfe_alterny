@@ -3,13 +3,16 @@ import {  useNavigate } from 'react-router-dom';
 //import { connect } from 'react-redux';
 import { reset_password_confirm } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
-const ResetPasswordConfirm = ({ reset_password }) => {
+import jwtDecode from 'jwt-decode';
+const ResetPasswordConfirm = ({match}) => {
     const [requestSent, setRequestSent] = useState(false);
+
     const [formData, setFormData] = useState({
         new_password: '',
         re_new_password: ''
     });
-    const accessToken = localStorage.getItem("access") ? localStorage.getItem("access") : null;
+    const token = localStorage.getItem("access") ? localStorage.getItem("access") : null;
+    const uid = token ? jwtDecode(token).user_id : null ;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { new_password, re_new_password } = formData;
@@ -38,7 +41,7 @@ const ResetPasswordConfirm = ({ reset_password }) => {
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='New Password'
+                        placeholder='Nouveau mot de passe'
                         name='new_password'
                         value={new_password}
                         onChange={e => onChange(e)}
@@ -50,7 +53,7 @@ const ResetPasswordConfirm = ({ reset_password }) => {
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='Confirm New Password'
+                        placeholder='Confirmer le nouveau mot de passe'
                         name='re_new_password'
                         value={re_new_password}
                         onChange={e => onChange(e)}
@@ -64,4 +67,3 @@ const ResetPasswordConfirm = ({ reset_password }) => {
     );
 };
 export default ResetPasswordConfirm;
-//export default connect(null, { reset_password })(ResetPassword);

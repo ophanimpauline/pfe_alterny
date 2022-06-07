@@ -40,24 +40,7 @@ const auth = useSelector((state) => state.auth)
         <>
         
           <div className="profile-wrapper">
-            <div className="profile-flex-box">
-            <div className="buttons-flex" style={{marginBottom:"10px"}}>
-        <Link to="/Profile">
-          <button className="profile-profile">Votre profile</button>
-        </Link>
-        <Link to="/Profile-panier">
-          <button className="profile-cart">Votre panier</button>
-        </Link>
-        <Link to="/Profile-wishlist">
-          <button className="profile-wishlist">Liste de souhaits</button>
-        </Link>
-        <Link to="/Profile-vendeurs">
-          <button className="profile-vendeurs">Vendeurs favoris</button>
-        </Link>
-        <Link to="/Profile-commandes">
-          <button className="profile-commandes">Mes commandes</button>
-        </Link>
-      </div>
+            <div className="profile-flex-box" style={{marginTop:"100px"}}>
               <h1 className="title1-profile">Vos informations: </h1>
               {/*a modification icon would be here, if you click on it it redirects you to the modification view */}
               <span className= "title2-profile"style={{ cursor: "pointer" }}>
@@ -95,6 +78,14 @@ const auth = useSelector((state) => state.auth)
                 <span>Cité:</span>
                 <span>{auth.city}</span>
               </div>
+              <div className="buttons-1" style={{display:"flex", flexDirection:"row"}}> 
+              <Link to="/Profile-vendeurs-favoris">
+          <button className="profile-vendeurs">Vendeurs favoris</button>
+        </Link>
+        <Link to="/Profile-commandes">
+          <button className="profile-commandes">Mes commandes</button>
+        </Link>
+        </div>
             </div>
           </div>
         </>

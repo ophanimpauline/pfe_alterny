@@ -141,15 +141,12 @@ const Login = () => {
                   required
                 />
               </div>
-              <p>Vérifiez votre email ou mot de passe ! </p>
+             
       
               <br />
               {/*we have one button only so we don't have to set a state, the submitting happens from this button automatically*/}
               <button style={{marginBottom:"10px"}}>SE CONNECTER</button>
-              <button style={{marginBottom:"40px"}}>
-              <ImFacebook2 style={{ color: "#4267B2", marginTop:"5px",marginRight:"4px" }} />
-              Connecter avec Facebook
-            </button>
+            
             
             </div>
           </form>

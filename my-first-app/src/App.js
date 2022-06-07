@@ -12,21 +12,18 @@ import NotFound from "./pages/NotFound";
 import Wishlist from "./components/Wishlist";
 import Profileuser from "./pages/Profileuser";
 import ProfileEdit from "./components/ProfileEdit";
-import Filtertest from "./pages/Filtertest";
 import ProductDetail from "./components/ProductDetail";
 import { ToastContainer } from "react-toastify";
 //react router dom v6 syntax for routing
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Profilepanier from "./pages/Profilepanier";
-import Profilewishlist from "./pages/Profilewishlist";
 import Store from "./components/Store";
 import SellerRegistration from "./pages/SellerRegistration";
-import SellerLogin from "./components/SellerLogin"
+import SellerLogin from "./components/SellerLogin";
 import StoreRegister from "./components/StoreRegister";
 import WishlistAuth from "./components/WishlistAuth";
 import Commande from "./components/Commande";
 import Profilestores from "./pages/Profilestores";
-import VendeurInfo from "./components/VendeurInfo"
+import VendeurInfo from "./components/VendeurInfo";
 import SearchResult from "./components/SearchResult";
 import Retourner from "./components/Retourner";
 import Profilecommandes from "./pages/ProfileCommandes";
@@ -42,19 +39,17 @@ const App = () => {
             <Route path="/" exact element={<Acceuil />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/commande" element={<Commande />} />
-            <Route path="/Filter" element={<Filtertest />}></Route>
             <Route path="/Cart" element={<Cart />}></Route>
             <Route path="/vendeur-info" element={<VendeurInfo />}></Route>
             <Route path="/recherche=:query" element={<SearchResult />}></Route>
-            <Route path="/reset-password-confirm" element={<ResetPasswordConfirm />}></Route>
-            <Route path="/reset-password" element={<Changermdp />}></Route>
-           
-            <Route path="/profile-panier" element={<Profilepanier />}></Route>
-            <Route path="/demande-de-retour" element={<Retourner />}></Route>
             <Route
-              path="/profile-wishlist"
-              element={<Profilewishlist />}
+              path="/reset-password-confirm"
+              element={<ResetPasswordConfirm />}
             ></Route>
+            <Route path="/reset-password" element={<Changermdp />}></Route>
+
+            <Route path="/demande-de-retour" element={<Retourner />}></Route>
+
             <Route
               path="/Profile-vendeurs-favoris"
               element={<Profilestores />}
@@ -69,7 +64,7 @@ const App = () => {
               element={<ProdParCat />}
             ></Route>
             <Route
-              path="/produits-collection:id/sous-collection:sid"
+              path="/produits-collection/:id/sous-collection/:sid"
               element={<ProdParSousCat />}
             ></Route>
 

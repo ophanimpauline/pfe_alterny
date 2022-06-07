@@ -47,10 +47,7 @@ const Login1 = () => {
           {auth.loginStatus === "pending" ? "Chargement..." : "SE CONNECTER"}
         </button>
         
-        <button style={{marginBottom:"40px"}}>
-              <ImFacebook2 style={{ color: "#4267B2", marginRight:"4px" }} />
-              Connecter avec Facebook
-            </button>
+        
       </form>
     </>
   );

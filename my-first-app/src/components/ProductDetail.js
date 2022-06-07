@@ -99,12 +99,7 @@ export default function ProductDetail() {
                 {items.reviews.map((review) => (
                   <>
                     <h1>{review.name}</h1>{" "}
-                    {items.reviews.id?.user_id == userid ? (
-                        <> 
-                      <FiEdit style={{fontSize:"30px"}}/>
-                      <button> X </button>
-                      </>
-                    ) : null}
+                  
                     <span>{review.date}</span>
                     <div>{review.description}</div>
                   </>

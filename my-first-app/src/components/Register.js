@@ -158,20 +158,7 @@ function Register() {
   return (
     <>
       <Container>
-      <WrapperG>
-          <Title>CRÉER VOTRE COMPTE</Title>
-          <STitle>S'inscrire avec Facebook:</STitle>
-
-          <button className="button-registration">
-            <ImFacebook2 style={{ color: "#4267B2" }} />
-            S'inscrire avec Facebook
-          </button>
-          <DP>
-            C'est facile, rapide et vous n'avez pas besoin de mémoriser un mot
-            de passe. Nous ne partagerons pas vos données et ne publierons rien
-            en votre nom.
-          </DP>
-        </WrapperG>
+  
         <hr style={{ size: "5px" }}></hr>
         <form  onSubmit={handleSubmit}>
           <div style={{padding:"30px"}} className="ui form">

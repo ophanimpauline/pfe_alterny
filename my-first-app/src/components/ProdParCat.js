@@ -64,6 +64,7 @@ export default function ProdParCat() {
           </div>
         </div>
       </form>
+      <div></div>
             
             {products?.items.results.map((product) => {
               return (
